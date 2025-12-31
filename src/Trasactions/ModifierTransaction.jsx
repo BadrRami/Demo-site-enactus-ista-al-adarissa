@@ -41,7 +41,6 @@ const ModifierTransaction = () => {
             Description:description,
             Montant:montant,
             Date:date,
-            Date:date,
             Type_Transaction:type,
             Catégorie:categorie
         })

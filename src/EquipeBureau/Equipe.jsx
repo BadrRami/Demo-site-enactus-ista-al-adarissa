@@ -40,7 +40,7 @@ const Equipe = () => {
 
   // 🗑 Supprimer membre
   const supprimerMembre = async (id) => {
-    if (!window.confirm('Voulez-vous supprimer ce membre  ?')) return;
+    if (!window.confirm('Voulez-vous supprimer ce membre ?')) return;
 
     const { error } = await supabase
       .from('Equipe')
