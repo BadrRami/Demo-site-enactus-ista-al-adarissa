@@ -61,7 +61,7 @@ const ListeMembres = () => {
 
   return (
     <>
-      <h2>Liste des membres du Bureau</h2>
+      <h2>Liste des membres de club</h2>
 
       <table className="table table-bordered table-hover mt-3">
         <thead className="table-light">
