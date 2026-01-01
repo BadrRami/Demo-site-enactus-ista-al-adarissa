@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import LeftBar from '../LeftBar';
 import supabase from '../SupaBase';
 import { useNavigate } from 'react-router-dom';
