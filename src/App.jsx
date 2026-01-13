@@ -18,12 +18,17 @@ import Equipe from "./EquipeBureau/Equipe";
 import AjouterEvenement from "./Events/AjouterEvenement";
 import ModifierEvent from "./Events/ModifierEvent";
 import Evenement from "./Events/Evenement";
+import DetailsEvent from "./Events/DetailsEvent";
 
 import AjouterTransaction from "./Trasactions/AjouterTransaction";
 import ModifierTransaction from "./Trasactions/ModifierTransaction";
 import ListeTransaction from "./Trasactions/ListeTransaction";
 
 import Parametre from "./Parametre";
+import Evenements from "./Evenements";
+import Annonces from "./Annonces";
+import ProtectedLayout from "./ProtectedLayout";
+
 
 function App() {
   return (
@@ -31,10 +36,13 @@ function App() {
       <NavBar />
 
       <Routes>
+        <Route element={<ProtectedLayout />}></Route>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/evenements" element={<Evenements />} />
+        <Route path="/annonces" element={<Annonces />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
@@ -51,6 +59,8 @@ function App() {
         <Route path="/ajouteEvent" element={<AjouterEvenement />} />
         <Route path="/modifierEvent/:id" element={<ModifierEvent />} />
         <Route path="/evenement" element={<Evenement />} />
+        <Route path="/DétailsEvenement/:id" element={<DetailsEvent />} />
+        <Route path="/AllEvenement" element={<Evenements />} />
 
         {/* Transactions */}
         <Route path="/ajouterTransaction" element={<AjouterTransaction />} />

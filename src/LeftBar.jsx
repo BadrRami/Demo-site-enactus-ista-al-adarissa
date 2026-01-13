@@ -1,36 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+
 const LeftBar = () => {
-    
+  // Récupérer l'utilisateur stocké au login
+  const connectedUser = JSON.parse(localStorage.getItem('connectedUser'))
 
-    return (
-        
-        <div>
-            <div style={{
-                width:"250px", 
-                background:"#2d2c2cff", 
-                height:"100vh", 
-                borderRadius:"0% 2% 2% 0%", 
-                display:"block", 
-                justifyContent:"center", 
-                fontSize:"24px", 
-                marginRight:"20px"
-            }}>
-                <h4 style={{color: "white"}}>ENACTUS ISTA AL ADARISSA</h4>
-                <div>
-                    <ul style={{listStyleType:"none", paddingLeft:"10px"}}>
-                        <li><Link to={"/dashboard"}>📅Tableau de Bord</Link></li>
-                        <li><Link to={"/equipe"}>👥Équipe</Link></li>
-                        
-                            <li><Link to={"/ListeTransaction"}>📋Liste des Transactions</Link></li>
+  if (!connectedUser) return <div>Utilisateur non connecté</div>
 
-                        <li><Link to={"/evenement"}>📅Événements</Link></li>
-                        <li><Link to={"/parametre"}>⚙Paramètres</Link></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+  // Vérifier le rôle
+  const isBureau = connectedUser.statut?.trim().toLowerCase() === 'bureau'
 
-    );
+  return (
+    <div style={{ width: 250, background: '#2d2c2cff', height: '100vh' }}>
+      <h4 style={{ color: 'white' }}>ENACTUS ISTA AL ADARISSA</h4>
+
+      <ul style={{ listStyle: 'none', padding: '0 10px' }}>
+        {isBureau && (
+          <>
+            <li><Link to="/dashboard">📊 Tableau de Bord</Link></li>
+            <li><Link to="/equipe">👥 Équipe</Link></li>
+            <li><Link to="/ListeTransaction">📋 Liste des Transactions</Link></li>
+            <li><Link to="/evenement">📅 Événements</Link></li>
+          </>
+        )}
+        <li><Link to="/profile">👤 Profile</Link></li>
+        <li><Link to="/parametre">⚙ Paramètres</Link></li>
+      </ul>
+    </div>
+  )
 }
 
-export default LeftBar;
+export default LeftBar
