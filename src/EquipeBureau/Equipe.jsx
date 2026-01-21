@@ -72,8 +72,8 @@ const Equipe = () => {
               <th>Nom</th>
               <th>Email</th>
               <th>Rôle</th>
-              <th>Genre</th>
               <th>ID Enactus</th>
+              <th>Genre</th>
               <th>Actions</th>
             </tr>
           </thead>
