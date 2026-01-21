@@ -58,7 +58,7 @@ const NavBar = () => {
                 to="/"
                 onClick={() => setIsOpen(false)}
               >
-                Home
+                Accueil
               </Link>
             </li>
             <li className="nav-item">
