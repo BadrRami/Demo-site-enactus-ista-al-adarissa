@@ -1,6 +1,6 @@
 import React from 'react';
 import LeftBar from '../LeftBar';
-import bcrypt from 'bcryptjs';
+//import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../SupaBase';
 const AjouterMembre = () => {
@@ -31,10 +31,10 @@ const AjouterMembre = () => {
             alert("vous devez cocher le genre de membre")
             return
         }
-        const hashedPassword = bcrypt.hashSync(motDePasse, 10);
+        //const hashedPassword = bcrypt.hashSync(motDePasse, 10);
         const newMmebre = {id: String(Date.now()), statut: "Membre", 
             Nom: nom, email: email, Filiere: filiere, 
-            mot_de_passe: hashedPassword,genre:genre, cotisation: etatCotisation,
+            mot_de_passe: motDePasse,genre:genre, cotisation: etatCotisation,
             telephone:tel
         };
         const { data, error } = await supabase
