@@ -73,6 +73,7 @@ const Equipe = () => {
               <th>Email</th>
               <th>Rôle</th>
               <th>Genre</th>
+              <th>ID Enactus</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -91,6 +92,7 @@ const Equipe = () => {
                   <td>{member.Nom}</td>
                   <td>{member.Email}</td>
                   <td>{member.Role}</td>
+                  <td>{member.IDEnactus}</td>
                   <td>{member.Genre}</td>
                   <td>
                     <Link
