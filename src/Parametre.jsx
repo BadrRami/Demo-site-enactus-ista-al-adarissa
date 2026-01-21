@@ -83,7 +83,7 @@ const Parametre = () => {
     }
 
     // 🔐 Hasher le mot de passe
-    const hashedPassword = await bcrypt.hash(motDePasse, 10);
+    //const hashedPassword = await bcrypt.hash(motDePasse, 10);
 
     const { error } = await supabase
       .from('Membres')
@@ -92,7 +92,7 @@ const Parametre = () => {
         Nom: nom,
         email: email,
         Filiere: filiere,
-        mot_de_passe: hashedPassword, // Stocker le hash
+        mot_de_passe: motDePasse, // Stocker le hash
         cotisation: etatCotisation,
         genre: genre,
         telephone: tel,
