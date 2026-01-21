@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import './contact.css'
 const Contact = () => {
+    const [darkMode, setDarkMode] = useState(false);
+
+    // Charger la préférence au démarrage
+    useEffect(() => {
+        const savedMode = localStorage.getItem('darkMode') === 'true';
+        setDarkMode(savedMode);
+        if (savedMode) {
+            document.documentElement.classList.add('dark-mode');
+        }
+    }, []);
+    // Toggle dark mode
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        document.documentElement.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', !darkMode);
+    };
     return (
-        <div>
-            <div className='text-center mt-4'>
+        <div className="contact-page-container">
+            <div className="grid-overlay"></div>
+             {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
+                {darkMode ? (
+                    <i className="bi bi-sun-fill"></i>
+                ) : (
+                    <i className="bi bi-moon-stars-fill"></i>
+                )}
+            </button> */}
+            <div className='headerContact'>
                 <h1>Contactez-nous</h1>
                 <p>Nous sommes là pour répondre à toutes vos questions</p>
             </div>
@@ -65,7 +89,7 @@ const Contact = () => {
                     <div class="social-links">
                         <Link to={""}><i class="bi bi-facebook"></i></Link>
                         <Link to={"https://www.instagram.com/enactus.istafes/?hl=fr"}><i class="bi bi-instagram"></i></Link>
-                        <Link to={""}><i class="bi bi-linkedin"></i></Link>
+                        <Link to={"https://www.linkedin.com/company/enactus-ista-al-adarissa-f%C3%A8s/posts/?feedView=all"}><i class="bi bi-linkedin"></i></Link>
                         <Link to={""}><i class="bi bi-twitter-x"></i></Link>
                         <Link to={""}><i class="bi bi-tiktok"></i></Link>
                     </div>

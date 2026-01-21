@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LeftBar from '../LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../SupaBase';
 const AjouterEvenement = () => {
+    const [user, setUser] = useState(null);
     const [nom, setNom] = useState('')
     const [date, setDate] = useState('')
     const [lieu, setLieu] = useState('')
@@ -19,10 +20,10 @@ const AjouterEvenement = () => {
             alert("La date doit être future");
             return;
         }
-        const idsalma=2
+        
         const Event = {id:String(Date.now()),Nom_Evenement:nom,Date:date, Lieu: lieu,
             Description:description,created_at: new Date().toISOString(),
-            Creer_par:idsalma}
+            Creer_par: user.id}
         const { data, error } = await supabase
             .from('Evenement') 
             .insert([Event])
@@ -35,6 +36,17 @@ const AjouterEvenement = () => {
         navigate('/evenement')
 
     }
+     // 🔐 Vérification connexion
+      useEffect(() => {
+        const isConnected = localStorage.getItem('isConnected');
+        const storedUser = localStorage.getItem('connectedUser');
+    
+        if (!isConnected || !storedUser) {
+          navigate('/login');
+        } else {
+          setUser(JSON.parse(storedUser));
+        }
+      }, [navigate]);
     return (
         <div className='d-flex'>
             <LeftBar />

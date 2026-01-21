@@ -29,6 +29,11 @@ import Evenements from "./Evenements";
 import Annonces from "./Annonces";
 import ProtectedLayout from "./ProtectedLayout";
 
+import Annonce from "./Annonces/Annonce";
+import CreerAnnonce from "./Annonces/CreerAnnonce";
+import ModifierAnnonce from "./Annonces/ModifierAnnonce";
+import Footer from "./Footer";
+
 
 function App() {
   return (
@@ -67,12 +72,18 @@ function App() {
         <Route path="/modifierTransaction/:id" element={<ModifierTransaction />} />
         <Route path="/listeTransaction" element={<ListeTransaction />} />
 
+        {/* Annonces */}
+        <Route path="/annonceBureau" element={<Annonce />}></Route>
+        <Route path="/ajouterAnnonce" element={<CreerAnnonce/>}></Route>
+        <Route path="/modifierannonce/:id" element={<ModifierAnnonce />}></Route>
+
         {/* Paramètres */}
         <Route path="/parametre" element={<Parametre />} />
 
         {/* 404 */}
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
+      
     </>
   );
 }
