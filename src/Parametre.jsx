@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import LeftBar from './LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from './SupaBase';
-//import bcrypt from 'bcryptjs'; // <-- Import bcrypt
 
 const Parametre = () => {
   const [user, setUser] = useState(null);
@@ -82,8 +81,6 @@ const Parametre = () => {
       return;
     }
 
-    // 🔐 Hasher le mot de passe
-    //const hashedPassword = await bcrypt.hash(motDePasse, 10);
 
     const { error } = await supabase
       .from('Membres')
@@ -92,7 +89,7 @@ const Parametre = () => {
         Nom: nom,
         email: email,
         Filiere: filiere,
-        mot_de_passe: motDePasse, // Stocker le hash
+        mot_de_passe: motDePasse, 
         cotisation: etatCotisation,
         genre: genre,
         telephone: tel,
