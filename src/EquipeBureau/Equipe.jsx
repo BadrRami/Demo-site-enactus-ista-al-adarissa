@@ -92,8 +92,8 @@ const Equipe = () => {
                   <td>{member.Nom}</td>
                   <td>{member.Email}</td>
                   <td>{member.Role}</td>
-                  <td>{member.Genre}</td>
                   <td>{member.IDEnactus}</td>
+                  <td>{member.Genre}</td>
                   
                   <td>
                     <Link
