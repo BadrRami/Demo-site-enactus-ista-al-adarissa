@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LeftBar from './LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from './SupaBase';
-import bcrypt from 'bcryptjs'; // <-- Import bcrypt
+//import bcrypt from 'bcryptjs'; // <-- Import bcrypt
 
 const Parametre = () => {
   const [user, setUser] = useState(null);
