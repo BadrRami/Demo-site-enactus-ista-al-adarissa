@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+
+:root {
+    --yellow: #FDB913;
+    --bg: #ffffff;
+    --surface: #f5f5f5;
+    --card: #ffffff;
+    --text: #000000;
+    --text-muted: #666666;
+    --border: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode {
+    --bg: #000000;
+    --surface: #1a1a1a;
+    --card: #0d0d0d;
+    --text: #ffffff;
+    --text-muted: #999999;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(253, 185, 19, 0.15);
+}
+
+/* Layout Modifier Membre */
+.modifier-membre-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
+}
+
+.modifier-membre-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    animation: gridMoveModifier 20s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes gridMoveModifier {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Toggle Dark Mode */
+.modifier-membre-dark-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    color: var(--yellow);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.modifier-membre-dark-toggle:hover {
+    transform: scale(1.1) rotate(360deg);
+    box-shadow: 0 6px 30px rgba(253, 185, 19, 0.4);
+    background: var(--yellow);
+    color: #000;
+}
+
+/* Main Content */
+.modifier-membre-content {
+    flex: 1;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.modifier-membre-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 40px;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--yellow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUpModifier 0.6s ease;
+}
+
+.modifier-membre-title::before {
+    content: '✏️ ';
+}
+
+/* Form Card */
+.modifier-form-card {
+    max-width: 900px;
+    background: var(--card);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px var(--shadow);
+    padding: 50px;
+    animation: fadeInUpModifier 0.6s ease 0.2s both;
+}
+
+.dark-mode .modifier-form-card {
+    box-shadow: 0 10px 40px rgba(253, 185, 19, 0.2);
+}
+
+/* Info Banner */
+.modifier-info-banner {
+    background: linear-gradient(135deg, rgba(253, 185, 19, 0.1) 0%, rgba(255, 202, 40, 0.1) 100%);
+    border: 2px solid rgba(253, 185, 19, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.modifier-info-banner i {
+    color: var(--yellow);
+    font-size: 1.5rem;
+}
+
+.modifier-info-text {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Form Groups */
+.modifier-form-group {
+    margin-bottom: 25px;
+}
+
+.modifier-form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modifier-form-label::before {
+    font-family: 'bootstrap-icons';
+    color: var(--yellow);
+    font-size: 1.1rem;
+}
+
+.modifier-form-label.label-nom::before { content: '\F4DA'; }
+.modifier-form-label.label-email::before { content: '\F32F'; }
+.modifier-form-label.label-filiere::before { content: '\F2EC'; }
+.modifier-form-label.label-password::before { content: '\F475'; }
+
+/* Form Controls */
+.modifier-input,
+.modifier-select {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.modifier-input:focus,
+.modifier-select:focus {
+    outline: none;
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 4px rgba(253, 185, 19, 0.1);
+    background: var(--card);
+}
+
+.modifier-select {
+    cursor: pointer;
+}
+
+/* Two Column Layout */
+.modifier-form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+/* Radio Groups */
+.modifier-radio-wrapper {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 20px;
+    border: 2px solid var(--border);
+    margin-bottom: 25px;
+}
+
+.modifier-radio-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modifier-radio-title i {
+    color: var(--yellow);
+    font-size: 1.1rem;
+}
+
+.modifier-radio-option {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modifier-radio-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    accent-color: var(--yellow);
+}
+
+.modifier-radio-input:checked {
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+}
+
+.modifier-radio-label {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+/* Buttons Container */
+.modifier-buttons-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+}
+
+.modifier-btn-submit {
+    flex: 1;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, var(--yellow) 0%, #ffca28 100%);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(253, 185, 19, 0.4);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modifier-btn-submit:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(253, 185, 19, 0.6);
+}
+
+.modifier-btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modifier-btn-cancel {
+    flex: 1;
+    padding: 18px 40px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.modifier-btn-cancel:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+}
+
+/* Spinner */
+.modifier-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spinModifier 0.8s linear infinite;
+}
+
+@keyframes spinModifier {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUpModifier {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@media (max-width: 768px) {
+    .modifier-membre-wrapper {
+        flex-direction: column;
+    }
+
+    .modifier-membre-content {
+        padding: 20px;
+    }
+
+    .modifier-membre-title {
+        font-size: 2rem;
+    }
+
+    .modifier-form-card {
+        padding: 30px 20px;
+    }
+
+    .modifier-form-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .modifier-buttons-container {
+        flex-direction: column;
+    }
+
+    .modifier-membre-dark-toggle {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}

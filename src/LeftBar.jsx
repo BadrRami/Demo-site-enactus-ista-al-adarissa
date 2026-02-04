@@ -107,7 +107,7 @@ const LeftBar = () => {
                   </Link>
                 </li>
               )}
-              {(isPresident  || isVicePresident) && (
+              {(isPresident  ||isTreasurer|| isVicePresident) && (
               <li>
                 <Link to="/tickets"  title="Tickets">
                   <i className="bi bi-ticket-fill"></i>
