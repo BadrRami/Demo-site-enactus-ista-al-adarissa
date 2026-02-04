@@ -50,12 +50,12 @@ const Annonce = () => {
                     min-height: 100vh;
                 }
 
-                .content {
+                .contentAnnonce {
                     flex: 1;
                     padding-left: 260px;
                 }
 
-                .page-container {
+                .page-containerAnnonce {
                     max-width: 1400px;
                     margin: 0 auto;
                     padding: 40px 20px;
@@ -102,7 +102,7 @@ const Annonce = () => {
                     box-shadow: 0 15px 35px rgba(253,185,19,0.4);
                 }
 
-                .table-container {
+                .table-containerAnnonce {
                     background: rgba(26, 26, 26, 0.6);
                     border: 2px solid rgba(253,185,19,0.2);
                     border-radius: 24px;
@@ -210,8 +210,8 @@ const Annonce = () => {
             <div className="layout">
                 <LeftBar />
 
-                <main className="content">
-                    <div className="page-container">
+                <main className="contentAnnonce">
+                    <div className="page-containerAnnonce">
                         <h1 className="page-title">
                             <FileText size={40} /> Gestion des Annonces
                         </h1>
@@ -225,7 +225,7 @@ const Annonce = () => {
                             </Link>
                         </div>
 
-                        <div className="table-container">
+                        <div className="table-containerAnnonce">
                             {allAnnonces.length > 0 ? (
                                 <table>
                                     <thead>

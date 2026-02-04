@@ -100,7 +100,7 @@ const Parametre = () => {
           font-family: 'Poppins', sans-serif;
         }
 
-        .layout {
+        .layoutProfile {
           display: flex;
           min-height: 100vh;
           background: #000;
@@ -109,8 +109,8 @@ const Parametre = () => {
           overflow-x: hidden;
         }
 
-        .layout::before {
-          content: '';
+        .layoutProfile::before {
+          contentProfile: '';
           position: fixed;
           top: -50%;
           right: -50%;
@@ -126,14 +126,14 @@ const Parametre = () => {
           50% { opacity: 0.6; transform: scale(1.1); }
         }
 
-        .content {
+        .contentProfile {
           flex: 1;
           padding-left: 260px;
           position: relative;
           z-index: 1;
         }
 
-        .page-container {
+        .page-containerProfile {
           max-width: 1200px;
           margin: 0 auto;
           padding: 40px 40px;
@@ -334,7 +334,7 @@ const Parametre = () => {
         }
 
         .submit-button::before {
-          content: '';
+          contentProfile: '';
           position: absolute;
           top: 50%;
           left: 50%;
@@ -379,7 +379,7 @@ const Parametre = () => {
         }
 
         @media (max-width: 768px) {
-          .content {
+          .contentProfile {
             padding-left: 0;
           }
 
@@ -401,11 +401,11 @@ const Parametre = () => {
         }
       `}</style>
 
-      <div className="layout">
+      <div className="layoutProfile">
         <LeftBar />
 
-        <div className="content">
-          <div className="page-container">
+        <div className="contentProfile">
+          <div className="page-containerProfile">
             <div className="header-section">
               <h1 className="page-title">⚙️ Paramètres</h1>
               <p className="page-subtitle">Modifiez vos informations personnelles</p>

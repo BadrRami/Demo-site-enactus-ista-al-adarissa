@@ -62,7 +62,7 @@ const Profile = () => {
             </div>
             <div className="profile-title">
               <h1>{user.Nom}</h1>
-              <span className="profile-role">{user.statut}</span>
+              <span className="profile-role">{user.role}</span>
             </div>
           </div>
 

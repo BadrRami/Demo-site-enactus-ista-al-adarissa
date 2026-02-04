@@ -20,6 +20,7 @@ const LeftBar = () => {
   const role = connectedUser.role?.trim().toLowerCase();
   const isBureau = statut === 'bureau';
   const isPresident = role === 'president';
+  const isVicePresident = role === 'vice president';
   const isCommunication = role === 'responsable de communication';
   const isTreasurer = role === 'treasurer';
   const isEvent = role === 'responsable des événement';
@@ -66,7 +67,7 @@ const LeftBar = () => {
         <ul>
           {isBureau && (
             <>
-              {isPresident && (
+              {(isPresident || isVicePresident) &&(
                 <>
                   <li>
                     <Link to="/dashboard" className={isActive('/dashboard')} title="Tableau de Bord">
@@ -82,7 +83,7 @@ const LeftBar = () => {
                   </li>
                 </>
               )}
-              {(isTreasurer || isPresident) && (
+              {(isTreasurer || isPresident || isVicePresident) && (
                 <li>
                   <Link to="/ListeTransaction" className={isActive('/ListeTransaction')} title="Transactions">
                     <i className="bi bi-receipt"></i>
@@ -90,7 +91,7 @@ const LeftBar = () => {
                   </Link>
                 </li>
               )}
-              {(isCommunication || isPresident) && (
+              {(isCommunication || isPresident || isVicePresident) && (
                 <li>
                   <Link to="/annonceBureau" className={isActive('/annonceBureau')} title="Annonces">
                     <i className="bi bi-megaphone-fill"></i>
@@ -98,7 +99,7 @@ const LeftBar = () => {
                   </Link>
                 </li>
               )}
-              {(isPresident || isEvent) && (
+              {(isPresident || isEvent || isVicePresident) && (
                 <li>
                   <Link to="/evenement" className={isActive('/evenement')} title="Événements">
                     <i className="bi bi-calendar-event-fill"></i>

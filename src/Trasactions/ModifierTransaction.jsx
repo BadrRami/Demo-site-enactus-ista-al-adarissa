@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Edit3,
     DollarSign,
@@ -9,6 +9,8 @@ import {
     ArrowLeft
 } from 'lucide-react';
 import LeftBar from '../LeftBar';
+import { useNavigate, useParams } from 'react-router-dom';
+import supabase from '../SupaBase';
 
 const ModifierTransaction = () => {
     const [description, setDescription] = React.useState('');
@@ -17,16 +19,67 @@ const ModifierTransaction = () => {
     const [type, setType] = React.useState('');
     const [categorie, setCategorie] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const {id} = useParams()
+    const navigate = useNavigate();
+    
+    useEffect(()=>{
+    const fetchTransaction = async ()=>{
         setLoading(true);
+        const { data, error } = await supabase
+            .from('Transactions')
+            .select('*')
+            .eq('id', id)
+            .single();
 
-        setTimeout(() => {
-            alert('Transaction modifiée avec succès ✅');
+        if (error) {
+            console.error('Erreur chargement transaction:', error);
+            alert('Erreur lors du chargement de la transaction');
+            navigate('/listeTransaction');
             setLoading(false);
-        }, 1500);
-    };
+            return;
+        }
+
+        setCategorie(data.categorie || '');
+        setDate(data.date || '');
+        setDescription(data.description || '');
+        setMontant(data.montant || '');
+        setType(data.type || '');
+        setLoading(false);
+    }
+    fetchTransaction();
+},[id, navigate]);
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!description || !montant || !date || !type || !categorie) {
+        alert('Vous devez remplir tous les champs');
+        return;
+    }
+    if (isNaN(montant) || Number(montant) <= 0) {
+        alert('Le montant doit être un nombre valide supérieur à 0');
+        return;
+    }
+
+    setLoading(true);
+    const updatedTransaction = { description, montant, date, type, categorie };
+
+    const { data, error } = await supabase
+        .from('Transactions')
+        .update(updatedTransaction)
+        .eq('id', id);
+
+    if (error) {
+        console.error('Erreur modification transaction:', error);
+        alert('❌ Erreur lors de la modification de la transaction');
+    } else {
+        alert('Transaction modifiée avec succès ✅');
+        navigate('/listeTransaction');
+    }
+
+    setLoading(false);
+};
+
+
 
     return (
         <div style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
@@ -48,7 +101,7 @@ const ModifierTransaction = () => {
                     padding-left: 260px;
                 }
 
-                .page-container {
+                .page-containerTransaction {
                     max-width: 1400px;
                     margin: 0 auto;
                     padding: 40px 20px;
@@ -204,9 +257,9 @@ const ModifierTransaction = () => {
 
             <div className="layout">
                 <LeftBar />
-
+<form onSubmit={handleSubmit}>
                 <main className="content">
-                    <div className="page-container">
+                    <div className="page-containerTransaction">
                         <a href="/dashboard" className="back-button">
                             <ArrowLeft size={20} /> Retour au Dashboard
                         </a>
@@ -319,6 +372,7 @@ const ModifierTransaction = () => {
                         </div>
                     </div>
                 </main>
+                </form>
             </div>
         </div>
     );

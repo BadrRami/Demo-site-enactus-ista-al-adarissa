@@ -85,7 +85,7 @@ const Dashboard = () => {
               <h1>Bonjour {user.Nom || 'Utilisateur'} 👋</h1>
               <p>Bienvenue sur votre tableau de bord Enactus</p>
             </div>
-            {(user.role === 'president' || user.role === 'VICE TEAM LEADER') && (
+            {(user.role === 'president' || user.role === 'vice president') && (
               <div className="welcome-actions">
                 <Link to="/ajouterMembre" className="action-btnn primary">
                   <i className="bi bi-person-plus-fill"></i>

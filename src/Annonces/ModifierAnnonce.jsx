@@ -77,7 +77,7 @@ const ModifierAnnonce = () => {
                     padding-left: 260px;
                 }
 
-                .page-container {
+                .page-containerModifierAnnonce {
                     max-width: 1200px;
                     margin: 0 auto;
                     padding: 40px 20px;
@@ -219,7 +219,7 @@ const ModifierAnnonce = () => {
                 <LeftBar />
 
                 <main className="content">
-                    <div className="page-container">
+                    <div className="page-containerModifierAnnonce">
                         <a href="/annonceBureau" className="back-button">
                             <ArrowLeft size={20} /> Retour
                         </a>
