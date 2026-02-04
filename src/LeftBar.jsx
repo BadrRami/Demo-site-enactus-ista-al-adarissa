@@ -113,6 +113,12 @@ const LeftBar = () => {
                   <span>Tickets</span>
                 </Link>
               </li>
+              <li>
+                <Link to="/Membre"  title="Tickets">
+                  <i className="bi bi-people-fill"></i>
+                  <span>Membres</span>
+                </Link>
+              </li>
             </>
           )}
           

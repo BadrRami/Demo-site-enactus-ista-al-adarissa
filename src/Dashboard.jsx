@@ -8,6 +8,8 @@ import './Dashboard.css';
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [membres, setMembres] = useState([]);
+  const [transactions, settransactions] = useState([]);
+  const [event, setevent] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
 
@@ -51,6 +53,34 @@ const Dashboard = () => {
     };
     fetchMembres();
   }, []);
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data, error } = await supabase
+        .from('Evenement')
+        .select('*')
+      if (error) {
+        console.error('Erreur récupération events:', error);
+        return;
+      }
+      setevent(data || []);
+    };
+    fetchEvents();
+  }, []);
+
+  useEffect(() => {
+    const fetchBudget = async () => {
+      const { data, error } = await supabase
+        .from('Transactions')
+        .select('*')
+      if (error) {
+        console.error('Erreur récupération transactions:', error);
+        return;
+      }
+      settransactions(data || []);
+    };
+    fetchBudget();
+  }, []);
+  
 
   if (!user) {
     return (
@@ -66,14 +96,33 @@ const Dashboard = () => {
 
   const femmes = membres.filter(m => m.genre === 'Femme').length;
   const hommes = membres.filter(m => m.genre === 'Homme').length;
+  const upCommingEvent =event.filter(e=> e.Date > Date.now()).length
+  const revenu = transactions.filter(
+  (transaction) => transaction.Type_Transaction === "Revenu"
+);
+
+const depense = transactions.filter(
+  (transaction) => transaction.Type_Transaction === "Dépense"
+);
+
+const totalRevenu = revenu.reduce(
+  (sum, t) => sum + Number(t.Montant),
+  0
+);
+
+const totalDepense = depense.reduce(
+  (sum, t) => sum + Number(t.Montant),
+  0
+);
+
+const budget = totalRevenu - totalDepense;
+
+
+
 
   return (
     <div className="dashboard-page-container">
       <div className="grid-overlay"></div>
-
-      {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-        {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-      </button> */}
 
       <div className="dashboard-layout">
         <LeftBar />
@@ -127,7 +176,7 @@ const Dashboard = () => {
               </div>
               <div className="stat-content">
                 <h3>Budget Total</h3>
-                <p className="stat-number">24.5K DH</p>
+                <p className="stat-number">{budget} DH</p>
                 <div className="stat-details">
                   <span className="stat-trend positive">
                     <i className="bi bi-arrow-up"></i>
@@ -143,7 +192,7 @@ const Dashboard = () => {
               </div>
               <div className="stat-content">
                 <h3>Événements à venir</h3>
-                <p className="stat-number">3</p>
+                <p className="stat-number">{upCommingEvent}</p>
                 <div className="stat-details">
                   <span className="stat-info">
                     <i className="bi bi-clock-fill"></i>
@@ -155,7 +204,7 @@ const Dashboard = () => {
           </div>
 
           {/* Members List Section */}
-          <div className="members-section">
+          {/* <div className="members-section">
             <div className="section-header">
               <h2>Liste des Membres</h2>
               <div className="section-actions">
@@ -172,7 +221,7 @@ const Dashboard = () => {
             <div className="members-list-container">
               <ListeMembres />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

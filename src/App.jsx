@@ -36,6 +36,7 @@ import Footer from "./Footer";
 import ListeTickets from "./Tickets/ListeTickets";
 import CrErTickets from "./Tickets/CréerTickets";
 import ScannerTicket from "./Tickets/ScannerTicket ";
+import ListeMembres from "./Membres/ListeMembres";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         {/* Membres */}
         <Route path="/ajouterMembre" element={<AjouterMembre />} />
         <Route path="/modifierMembre/:id" element={<ModifierMembre />} />
+        <Route path="/Membre" element={<ListeMembres/>}></Route>
 
         {/* Équipe */}
         <Route path="/ajouterMembreEquipe" element={<AjouterMembreEquipe />} />
