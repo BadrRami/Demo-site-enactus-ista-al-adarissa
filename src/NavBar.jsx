@@ -37,7 +37,7 @@ const NavBar = () => {
       <div className="navbar-container">
         <Link className="navbar-logo" to="/">
           <img src="/img/logo.png" alt="Enactus Logo" />
-          <span>Enactus</span>
+          <span>Enactus </span>
         </Link>
 
         <button 

@@ -106,6 +106,12 @@ const LeftBar = () => {
                   </Link>
                 </li>
               )}
+              <li>
+                <Link to="/tickets"  title="Tickets">
+                  <i className="bi bi-ticket-fill"></i>
+                  <span>Tickets</span>
+                </Link>
+              </li>
             </>
           )}
           

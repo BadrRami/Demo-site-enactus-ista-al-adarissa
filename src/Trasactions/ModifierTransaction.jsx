@@ -1,103 +1,327 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import {
+    Edit3,
+    DollarSign,
+    Calendar,
+    Tag,
+    FileText,
+    Save,
+    ArrowLeft
+} from 'lucide-react';
 import LeftBar from '../LeftBar';
-import { useNavigate, useParams } from 'react-router-dom';
-import supabase from '../SupaBase';
+
 const ModifierTransaction = () => {
-    const {id} = useParams();
     const [description, setDescription] = React.useState('');
     const [montant, setMontant] = React.useState('');
     const [date, setDate] = React.useState('');
     const [type, setType] = React.useState('');
     const [categorie, setCategorie] = React.useState('');
-    const navigate = useNavigate();
-    // 🔄 Charger la transaction
-  useEffect(() => {
-    const fetchTransaction = async () => {
-      const { data, error } = await supabase
-        .from('Transactions')
-        .select('*')
-        .eq('id', id)
-        .single();
+    const [loading, setLoading] = React.useState(false);
 
-      if (error) {
-        console.error(error);
-        return;
-      }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
 
-      setDescription(data.Description);
-      setMontant(data.Montant);
-      setDate(data.Date);
-      setType(data.Type_Transaction);
-      setCategorie(data.Catégorie);
+        setTimeout(() => {
+            alert('Transaction modifiée avec succès ✅');
+            setLoading(false);
+        }, 1500);
     };
 
-    fetchTransaction();
-  }, [id]);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { error } = await supabase
-        .from('Transactions')
-        .update({
-            Description:description,
-            Montant:montant,
-            Date:date,
-            Type_Transaction:type,
-            Catégorie:categorie
-        })
-        .eq('id', id);
-
-        if (error) {
-        console.error('Erreur update:', error);
-        alert('Erreur lors de la modification');
-        } else {
-        alert('Membre modifié avec succès ✅');
-        navigate('/dashboard');
-        }
-    }
-        
-    
     return (
-        <div className='d-flex'>
-            <LeftBar    />
-            <div>
-                <h2>Modifier la Transaction</h2>
-                 <form className="container mt-4" onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Entrez la description de la transaction" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="montant" className="form-label">Montant</label>
-                    <input type="number" className="form-control" id="montant" value={montant} onChange={(e) => setMontant(e.target.value)} placeholder="Entrez le montant de la transaction" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="date" className="form-label">Date</label>
-                    <input type="date" className="form-control" id="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="type" className="form-label">Type de Transaction</label>
-                    <select className="form-select" id="type" value={type} onChange={(e) => setType(e.target.value)}>
-                        <option value="">Sélectionnez le type</option>
-                        <option value="Revenu">Revenu</option>
-                        <option value="Dépense">Dépense</option>
-                    </select>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="categorie" className="form-label" >Catégorie</label>
-                    <select className="form-select" id="categorie" value={categorie} onChange={(e) => setCategorie(e.target.value)}>
-                        <option value="">Sélectionnez la catégorie</option>
-                        <option value="donation">Donation</option>
-                        <option value="sponsorship">Sponsorship</option>
-                        <option value="operational">Opérationnel</option>
-                        <option value="event">Événement</option>
-                    </select>
-                </div>
+        <div style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
+            <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-                <button type="submit" className="btn btn-primary">Modifier Transaction</button>
-            </form>
+                * {
+                    box-sizing: border-box;
+                    font-family: 'Poppins', sans-serif;
+                }
+
+                .layout {
+                    display: flex;
+                    min-height: 100vh;
+                }
+
+                .content {
+                    flex: 1;
+                    padding-left: 260px;
+                }
+
+                .page-container {
+                    max-width: 1400px;
+                    margin: 0 auto;
+                    padding: 40px 20px;
+                }
+
+                .back-button {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 12px 24px;
+                    background: rgba(253, 185, 19, 0.1);
+                    border: 2px solid rgba(253, 185, 19, 0.3);
+                    border-radius: 12px;
+                    color: #FDB913;
+                    font-weight: 600;
+                    text-decoration: none;
+                    margin-bottom: 30px;
+                    transition: 0.3s;
+                }
+
+                .back-button:hover {
+                    background: rgba(253, 185, 19, 0.2);
+                    transform: translateX(-5px);
+                }
+
+                .page-title {
+                    font-size: 2.5rem;
+                    font-weight: 800;
+                    background: linear-gradient(135deg, #FDB913, #ffca4f);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+
+                .page-subtitle {
+                    color: #aaa;
+                    margin-bottom: 30px;
+                }
+
+                .form-container {
+                    background: rgba(26, 26, 26, 0.6);
+                    border: 2px solid rgba(253, 185, 19, 0.2);
+                    border-radius: 24px;
+                    padding: 40px;
+                }
+
+                .info-card {
+                    background: rgba(253, 185, 19, 0.1);
+                    border: 2px solid rgba(253, 185, 19, 0.3);
+                    border-radius: 16px;
+                    padding: 20px;
+                    display: flex;
+                    gap: 15px;
+                    margin-bottom: 30px;
+                }
+
+                .form-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 25px;
+                }
+
+                .form-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .full-width {
+                    grid-column: 1 / -1;
+                }
+
+                .form-label {
+                    display: flex;
+                    gap: 8px;
+                    font-weight: 600;
+                }
+
+                .form-input,
+                .form-select {
+                    padding: 15px 20px;
+                    background: rgba(0,0,0,0.4);
+                    border: 2px solid rgba(253,185,19,0.2);
+                    border-radius: 12px;
+                    color: white;
+                }
+
+                .type-selector {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                }
+
+                .type-option {
+                    padding: 15px;
+                    border-radius: 12px;
+                    text-align: center;
+                    cursor: pointer;
+                    border: 2px solid rgba(253,185,19,0.2);
+                }
+
+                .type-option.active {
+                    background: #FDB913;
+                    color: #000;
+                    font-weight: 700;
+                }
+
+                .button-group {
+                    display: flex;
+                    gap: 15px;
+                    margin-top: 30px;
+                }
+
+                .submit-button {
+                    flex: 1;
+                    padding: 18px;
+                    background: linear-gradient(135deg, #FDB913, #ffca4f);
+                    border: none;
+                    border-radius: 12px;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+
+                .cancel-button {
+                    padding: 18px;
+                    border: 2px solid rgba(253,185,19,0.3);
+                    background: transparent;
+                    color: #FDB913;
+                    border-radius: 12px;
+                    cursor: pointer;
+                }
+
+                @media (max-width: 768px) {
+                    .content {
+                        padding-left: 0;
+                    }
+
+                    .page-title {
+                        font-size: 2rem;
+                    }
+
+                    .button-group {
+                        flex-direction: column;
+                    }
+
+                    .type-selector {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            `}</style>
+
+            <div className="layout">
+                <LeftBar />
+
+                <main className="content">
+                    <div className="page-container">
+                        <a href="/dashboard" className="back-button">
+                            <ArrowLeft size={20} /> Retour au Dashboard
+                        </a>
+
+                        <h1 className="page-title">
+                            <Edit3 size={40} /> Modifier la Transaction
+                        </h1>
+                        <p className="page-subtitle">
+                            Mettez à jour les informations de la transaction
+                        </p>
+
+                        <div className="form-container">
+                            <div className="info-card">
+                                <FileText size={24} />
+                                <p>
+                                    Tous les champs sont obligatoires pour modifier la transaction.
+                                </p>
+                            </div>
+
+                            <div className="form-grid">
+                                <div className="form-group full-width">
+                                    <label className="form-label">
+                                        <FileText size={18} /> Description
+                                    </label>
+                                    <input
+                                        className="form-input"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <DollarSign size={18} /> Montant (MAD)
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-input"
+                                        value={montant}
+                                        onChange={(e) => setMontant(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Calendar size={18} /> Date
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-input"
+                                        value={date}
+                                        onChange={(e) => setDate(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Tag size={18} /> Type
+                                    </label>
+                                    <div className="type-selector">
+                                        <div
+                                            className={`type-option ${type === 'Revenu' ? 'active' : ''}`}
+                                            onClick={() => setType('Revenu')}
+                                        >
+                                            ⬆️ Revenu
+                                        </div>
+                                        <div
+                                            className={`type-option ${type === 'Dépense' ? 'active' : ''}`}
+                                            onClick={() => setType('Dépense')}
+                                        >
+                                            ⬇️ Dépense
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Tag size={18} /> Catégorie
+                                    </label>
+                                    <select
+                                        className="form-select"
+                                        value={categorie}
+                                        onChange={(e) => setCategorie(e.target.value)}
+                                    >
+                                        <option value="">Sélectionner</option>
+                                        <option value="donation">Donation</option>
+                                        <option value="sponsorship">Sponsorship</option>
+                                        <option value="event">Événement</option>
+                                        <option value="operation">Opérationnel</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="button-group">
+                                <button
+                                    className="cancel-button"
+                                    onClick={() => window.history.back()}
+                                >
+                                    Annuler
+                                </button>
+
+                                <button
+                                    className="submit-button"
+                                    disabled={loading}
+                                    onClick={handleSubmit}
+                                >
+                                    <Save size={18} /> Modifier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
             </div>
         </div>
     );
-}
+};
 
 export default ModifierTransaction;

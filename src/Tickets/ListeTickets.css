@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+:root {
+    --yellow: #FDB913;
+    --bg: #ffffff;
+    --surface: #f5f5f5;
+    --card: #ffffff;
+    --text: #000000;
+    --text-muted: #666666;
+    --border: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode {
+    --bg: #000000;
+    --surface: #1a1a1a;
+    --card: #0d0d0d;
+    --text: #ffffff;
+    --text-muted: #999999;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(253, 185, 19, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Layout principal */
+.page-container {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    animation: gridMove 20s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Toggle Dark Mode */
+.dark-mode-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    color: var(--yellow);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1) rotate(360deg);
+    box-shadow: 0 6px 30px rgba(253, 185, 19, 0.4);
+    background: var(--yellow);
+    color: #000;
+}
+
+.tickets-main-content {
+    flex: 1;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
+    transition: background-color 0.3s ease;
+}
+
+/* Titre */
+.tickets-main-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 30px;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--yellow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.6s ease;
+}
+
+/* Bouton créer */
+.btn-create-ticket {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--yellow) 0%, #ffca28 100%);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(253, 185, 19, 0.4);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 30px;
+}
+
+.btn-create-ticket:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(253, 185, 19, 0.6);
+}
+
+/* Tableau */
+.tickets-table-wrapper {
+    background: var(--card);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px var(--shadow);
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease 0.4s both;
+    transition: all 0.3s ease;
+}
+
+.dark-mode .tickets-table-wrapper {
+    box-shadow: 0 10px 40px rgba(253, 185, 19, 0.2);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    transition: background-color 0.3s ease;
+}
+
+th {
+    padding: 20px 25px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: var(--surface);
+}
+
+.dark-mode tbody tr:hover {
+    background: var(--surface);
+    box-shadow: 0 4px 15px rgba(253, 185, 19, 0.1);
+}
+
+td {
+    padding: 25px;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+td:first-child {
+    font-weight: 700;
+    color: var(--yellow);
+    font-size: 1rem;
+}
+
+td:nth-child(2) {
+    font-weight: 600;
+}
+
+/* Badge statut */
+.badge-statut {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.badge-statut::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Lien voir */
+.link-voir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.link-voir:hover {
+    background: #3b82f6;
+    color: #fff;
+    transform: translateX(3px);
+}
+
+/* Bouton supprimer */
+.btn-supprimer {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-supprimer:hover {
+    background: #ef4444;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--border);
+    border-top-color: var(--yellow);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--yellow) 0%, #ffca28 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(253, 185, 19, 0.3);
+    font-size: 3.5rem;
+}
+
+.empty-state h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .tickets-main-content {
+        padding: 20px;
+    }
+
+    .tickets-main-content h1 {
+        font-size: 2rem;
+    }
+    
+    .tickets-table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
+
+    .btn-create-ticket {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dark-mode-toggle {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}

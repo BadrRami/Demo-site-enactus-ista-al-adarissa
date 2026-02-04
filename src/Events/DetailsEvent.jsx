@@ -89,11 +89,11 @@ const DetailsEvent = () => {
           </div>
 
           <div className="event-actions">
-            <button className="action-btn primary">
+            <button className="action-btnv primary">
               <i className="bi bi-person-plus"></i>
               S'inscrire à l'événement
             </button>
-            <button className="action-btn secondary">
+            <button className="action-btnv secondary">
               <i className="bi bi-share"></i>
               Partager
             </button>

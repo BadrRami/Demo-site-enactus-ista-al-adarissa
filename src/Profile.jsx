@@ -62,7 +62,7 @@ const Profile = () => {
             </div>
             <div className="profile-title">
               <h1>{user.Nom}</h1>
-              <span className="profile-role">{user.role}</span>
+              <span className="profile-role">{user.statut}</span>
             </div>
           </div>
 
@@ -122,11 +122,11 @@ const Profile = () => {
           </div>
 
           <div className="profile-actions">
-            <button className="action-btn primary">
+            <button className="action-btnn primary">
               <i className="bi bi-pencil-fill"></i>
               Modifier le profil
             </button>
-            <button className="action-btn secondary">
+            <button className="action-btnn secondary">
               <i className="bi bi-key-fill"></i>
               Changer le mot de passe
             </button>

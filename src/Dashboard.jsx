@@ -87,11 +87,11 @@ const Dashboard = () => {
             </div>
             {(user.role === 'president' || user.role === 'VICE TEAM LEADER') && (
               <div className="welcome-actions">
-                <Link to="/ajouterMembre" className="action-btn primary">
+                <Link to="/ajouterMembre" className="action-btnn primary">
                   <i className="bi bi-person-plus-fill"></i>
                   Ajouter Membre
                 </Link>
-                <Link to="/ajouterMembreEquipe" className="action-btn secondary">
+                <Link to="/ajouterMembreEquipe" className="action-btnn secondary">
                   <i className="bi bi-people-fill"></i>
                   Ajouter à l'Équipe
                 </Link>

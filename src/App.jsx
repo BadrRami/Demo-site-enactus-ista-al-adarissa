@@ -33,6 +33,9 @@ import Annonce from "./Annonces/Annonce";
 import CreerAnnonce from "./Annonces/CreerAnnonce";
 import ModifierAnnonce from "./Annonces/ModifierAnnonce";
 import Footer from "./Footer";
+import ListeTickets from "./Tickets/ListeTickets";
+import CrErTickets from "./Tickets/CréerTickets";
+import ScannerTicket from "./Tickets/ScannerTicket ";
 
 
 function App() {
@@ -76,6 +79,11 @@ function App() {
         <Route path="/annonceBureau" element={<Annonce />}></Route>
         <Route path="/ajouterAnnonce" element={<CreerAnnonce/>}></Route>
         <Route path="/modifierannonce/:id" element={<ModifierAnnonce />}></Route>
+
+        {/* Tickets */}
+        <Route path="/tickets" element={<ListeTickets />} />
+        <Route path="/tickets/creer" element={<CrErTickets />} />
+        <Route path="/tickets/scanner" element={<ScannerTicket />} />
 
         {/* Paramètres */}
         <Route path="/parametre" element={<Parametre />} />
