@@ -5,6 +5,7 @@ import supabase from '../SupaBase';
 import './AjouterTransaction.css';
 
 const AjouterTransaction = () => {
+  const [user, setUser] = useState(null);
   const [description, setDescription] = useState('');
   const [montant, setMontant] = useState('');
   const [date, setDate] = useState('');
@@ -13,6 +14,18 @@ const AjouterTransaction = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+
+  // 🔐 Vérification connexion
+    useEffect(() => {
+      const isConnected = localStorage.getItem('isConnected');
+      const storedUser = localStorage.getItem('connectedUser');
+      if (!isConnected || !storedUser) {
+        navigate('/login');
+      } else {
+        setUser(JSON.parse(storedUser));
+      }
+    }, [navigate]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
@@ -49,6 +62,7 @@ const AjouterTransaction = () => {
       Date: date,
       Type_Transaction: type,
       Catégorie: categorie,
+      Crée_par:user.id
     };
 
     const { data, error } = await supabase

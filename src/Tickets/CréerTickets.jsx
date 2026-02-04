@@ -12,18 +12,33 @@ const CreerTickets = () => {
     const navigate = useNavigate()
     const [qrImage, setQrImage] = useState("");
 
+    // 🔐 Vérification connexion
+        useEffect(() => {
+          const isConnected = localStorage.getItem('isConnected');
+          const storedUser = localStorage.getItem('connectedUser');
+          if (!isConnected || !storedUser) {
+            navigate('/login');
+          } else {
+            setUser(JSON.parse(storedUser));
+          }
+        }, [navigate]);
+
     // Générer  QR Code
+    // crypto.randomUUID() → génère un UUID aléatoire (ex: 550e8400-e29b-41d4-a716-446655440000)
+    // .slice(0, 8) → on prend juste les 8 premiers caractères pour que le code soit court
+    // .toUpperCase() → pour uniformiser
+    // "TK-" → préfixe pour identifier facilement que c’est un ticket
     const generateTicketCode = () => {
     return "TK-" + crypto.randomUUID().slice(0, 8).toUpperCase();
     };
 
-    const [ticketCode, setTicketCode] = useState(generateTicketCode());
+    const [ticketCode, setTicketCode] = useState(generateTicketCode()); // içi je stocke le code généré par la fonction generateTicketCode
 
     // Générer l'image de QR Code
     const generateQRCode = async (code) => {
     try {
-        const qr = await QRCode.toDataURL(code);
-        setQrImage(qr);
+        const qr = await QRCode.toDataURL(code); // QRCode.toDataURL(code) → transforme le code (TK-XXXX) en image base64
+        setQrImage(qr); // setQrImage(qr) → stocke l’image dans l’état React pour l’afficher
     } catch (err) {
         console.error("Erreur génération QR", err);
     }
@@ -36,10 +51,10 @@ const CreerTickets = () => {
 
     // Télécharger le QR code
     const downloadQR = () => {
-    const a = document.createElement("a");
-    a.href = qrImage;
-    a.download = `ticket_${ticketCode}.png`;
-    a.click();
+    const a = document.createElement("a"); // Crée un <a> invisible
+    a.href = qrImage; // href → image QR base64
+    a.download = `ticket_${ticketCode}.png`; // download → nom du fichier pour le designer
+    a.click(); // click() → déclenche le téléchargement
     };
 
 
@@ -96,7 +111,8 @@ const CreerTickets = () => {
         prix: e.target.prix.value,
         statut: e.target.statut.value,
         type: e.target.type.value,
-        code: ticketCode
+        code: ticketCode,
+        Créer_par:user.id
         };
 
 

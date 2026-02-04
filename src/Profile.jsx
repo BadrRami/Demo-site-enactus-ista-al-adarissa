@@ -74,7 +74,7 @@ const Profile = () => {
               </div>
               <div className="info-row">
                 <span className="info-label">Nom complet</span>
-                <span className="info-value">{user.Nom}</span>
+                <span className="info-value">{user.Nom.charAt(0).toUpperCase() + user.Nom.slice(1)}</span>
               </div>
               <div className="info-row">
                 <span className="info-label">Email</span>
