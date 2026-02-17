@@ -10,23 +10,23 @@ const DetailsEvent = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   // 🔐 Vérification connexion
-  useEffect(() => {
-        const isConnected = localStorage.getItem('isConnected');
-        const storedUser = localStorage.getItem('connectedUser');
+  // useEffect(() => {
+  //       const isConnected = localStorage.getItem('isConnected');
+  //       const storedUser = localStorage.getItem('connectedUser');
                   
-        if (!isConnected || !storedUser) {
-            navigate('/login');
-             return;
-        }
+  //       if (!isConnected || !storedUser) {
+  //           navigate('/login');
+  //            return;
+  //       }
                   
-        const userObj = JSON.parse(storedUser);
-        setUser(userObj);
+  //       const userObj = JSON.parse(storedUser);
+  //       setUser(userObj);
                   
-        const allowedRoles = ["president", "vice president", "responsable événementielle"];
-        if (!allowedRoles.includes(userObj.role)) {
-        navigate('/login');
-        }
-  }, [navigate]);
+  //       const allowedRoles = ["president", "vice president", "responsable événementielle"];
+  //       if (!allowedRoles.includes(userObj.role)) {
+  //       navigate('/login');
+  //       }
+  // }, [navigate]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';

@@ -15,7 +15,7 @@ export default function CotisationPie({ cotisé, nonCotisé }) {
     datasets: [
       {
         data: [cotisé, nonCotisé],
-        backgroundColor: ["#22c55e", "#ef4444"],
+        backgroundColor: ["#FDB913", "#ef4444"],
         borderWidth: 1
       }
     ]

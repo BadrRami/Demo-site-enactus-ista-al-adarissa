@@ -29,7 +29,7 @@ const AjouterMembre = () => {
                     
                             const userObj = JSON.parse(storedUser);
                             setUser(userObj);
-                    
+                    const role = userObj.role?.trim().toLowerCase();
                             const allowedRoles = ["president", "vice president", "responsable rh"];
 
                                 if (!allowedRoles.includes(role)) {

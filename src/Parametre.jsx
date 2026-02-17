@@ -3,7 +3,8 @@ import LeftBar from './LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from './SupaBase';
 import { User, Mail, GraduationCap, Lock, Phone, Check, X } from 'lucide-react';
-import './Parametre.css'
+ import './Parametre.css'
+
 const Parametre = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(null);
@@ -47,18 +48,20 @@ const Parametre = () => {
   }, [user]);
 
   useEffect(() => {
-          const savedMode = localStorage.getItem('darkMode') === 'true';
-          setDarkMode(savedMode);
-          if (savedMode) {
-              document.documentElement.classList.add('dark-mode');
-          }
-      }, []);
-  
-      const toggleDarkMode = () => {
-          setDarkMode(!darkMode);
-          document.documentElement.classList.toggle('dark-mode');
-          localStorage.setItem('darkMode', !darkMode);
-      };
+    const savedMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedMode);
+    if (savedMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', !darkMode);
+  };
 
   useEffect(() => {
     if (!motDePasse) {
@@ -109,6 +112,8 @@ const Parametre = () => {
     <>
       <div className="layoutProfile">
         <LeftBar />
+
+       
 
         <div className="contentProfile">
           <div className="page-containerProfile">
@@ -168,16 +173,16 @@ const Parametre = () => {
                         onChange={e => setFiliere(e.target.value)}
                       >
                         <option value="">-- Sélectionner une filière --</option>
-                                <option value="Développement Digital premier année">Développement Digital 1ère année</option>
-                                <option value="Développement Digital option full stack">Développement Digital - Full Stack</option>
-                                <option value="Infrastructure Digitale">Infrastructure Digitale</option>
-                                <option value="Gestion des entreprises première année">Gestion des Entreprises première année</option>
-                                <option value="Assistant Administratif">Assistant Administratif</option>
-                                <option value="Gestion des entreprises option commerce">Gestion des Entreprises - Commerce</option>
-                                <option value="Gestion des entreprises option comptabilité et finance">Gestion des entreprises option comptabilité et finance</option>
-                                <option value="Gestion des entreprises option RH">Gestion des Entreprises - RH</option>
-                                <option value="Gestion des entreprises option office manager">Gestion des Entreprises - Office Manager</option>
-                                <option value="Infographie">Infographie</option>
+                        <option value="Développement Digital premier année">Développement Digital 1ère année</option>
+                        <option value="Développement Digital option full stack">Développement Digital - Full Stack</option>
+                        <option value="Infrastructure Digitale">Infrastructure Digitale</option>
+                        <option value="Gestion des entreprises première année">Gestion des Entreprises première année</option>
+                        <option value="Assistant Administratif">Assistant Administratif</option>
+                        <option value="Gestion des entreprises option commerce">Gestion des Entreprises - Commerce</option>
+                        <option value="Gestion des entreprises option comptabilité et finance">Gestion des entreprises option comptabilité et finance</option>
+                        <option value="Gestion des entreprises option RH">Gestion des Entreprises - RH</option>
+                        <option value="Gestion des entreprises option office manager">Gestion des Entreprises - Office Manager</option>
+                        <option value="Infographie">Infographie</option>
                       </select>
                     </div>
                   </div>
@@ -284,32 +289,6 @@ const Parametre = () => {
                     </label>
                   </div>
                 </div>
-
-                {/* <div className="form-group full-width">
-                  <label className="form-label">État de cotisation</label>
-                  <div className="radio-group">
-                    <label className="radio-option">
-                      <input 
-                        type="radio" 
-                        name="cotisation" 
-                        value="Payé"
-                        checked={etatCotisation === 'Payé'}
-                        onChange={e => setEtatCotisation(e.target.value)}
-                      />
-                      Payé
-                    </label>
-                    <label className="radio-option">
-                      <input 
-                        type="radio" 
-                        name="cotisation" 
-                        value="Non payé"
-                        checked={etatCotisation === 'Non payé'}
-                        onChange={e => setEtatCotisation(e.target.value)}
-                      />
-                      Non payé
-                    </label>
-                  </div>
-                </div> */}
 
                 <div className="button-group">
                   <button 

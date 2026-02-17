@@ -21,7 +21,9 @@
   --gradient-glow: rgba(253, 185, 19, 0.08);
 }
 
-:root.dark-mode {
+html.dark-mode,
+:root.dark-mode,
+.dark-mode {
   /* Dark mode */
   --bg-primary: #000;
   --bg-secondary: rgba(26, 26, 26, 0.8);
@@ -32,6 +34,34 @@
   --input-focus-bg: rgba(0, 0, 0, 0.7);
   --radio-bg: rgba(0, 0, 0, 0.3);
   --gradient-glow: rgba(253, 185, 19, 0.15);
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle-profile {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  color: #FDB913;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  box-shadow: 0 4px 20px rgba(253, 185, 19, 0.2);
+}
+
+.dark-mode-toggle-profile:hover {
+  transform: scale(1.1) rotate(360deg);
+  box-shadow: 0 6px 30px rgba(253, 185, 19, 0.4);
+  background: #FDB913;
+  color: #000;
 }
 
 .layoutProfile {

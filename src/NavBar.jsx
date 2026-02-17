@@ -8,18 +8,52 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  // Fonction pour appliquer le dark mode au DOM
+  const applyDarkMode = (isDark) => {
+    const html = document.documentElement;
+    const body = document.body;
+    
+    if (isDark) {
+      html.classList.add('dark-mode');
+      body.classList.add('dark-mode');
+      html.setAttribute('data-theme', 'dark');
+    } else {
+      html.classList.remove('dark-mode');
+      body.classList.remove('dark-mode');
+      html.setAttribute('data-theme', 'light');
+    }
+  };
+
+  // Chargement initial
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
+    console.log('Initial load - darkMode:', savedMode);
     setDarkMode(savedMode);
-    if (savedMode) {
-      document.documentElement.classList.add('dark-mode');
-    }
+    applyDarkMode(savedMode);
   }, []);
 
+  // Toggle avec force update
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', !darkMode);
+    console.log('🔘 Toggle clicked! Current state:', darkMode);
+    
+    const newMode = !darkMode;
+    console.log('New mode:', newMode);
+    
+    // 1. Update state
+    setDarkMode(newMode);
+    
+    // 2. Update localStorage
+    localStorage.setItem('darkMode', String(newMode));
+    
+    // 3. Force update DOM immédiatement (ne pas attendre le re-render)
+    applyDarkMode(newMode);
+    
+    // 4. Dispatch event pour les autres composants
+    window.dispatchEvent(new CustomEvent('darkModeChanged', { 
+      detail: { darkMode: newMode } 
+    }));
+    
+    console.log('✅ Toggle complete. HTML class:', document.documentElement.className);
   };
 
   const handleLogout = () => {
@@ -104,6 +138,7 @@ const NavBar = () => {
               className="theme-toggle" 
               onClick={toggleDarkMode}
               aria-label="Toggle theme"
+              type="button"
             >
               {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
             </button>
