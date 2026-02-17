@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import LeftBar from './LeftBar';
 import { Link, useNavigate } from 'react-router-dom';
-import ListeMembres from './Membres/ListeMembres';
 import supabase from './SupaBase';
 import './Dashboard.css';
+import CotisationPie from "./Statistiques/CotisationPie"
+import BarFiliere from "./Statistiques/BarFiliere"
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -11,6 +12,8 @@ const Dashboard = () => {
   const [transactions, settransactions] = useState([]);
   const [event, setevent] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const [cotisé, setCotisé]= useState(0)
+  const [Noncotisé, setNonCotisé]= useState(0)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,14 +32,23 @@ const Dashboard = () => {
 
   // 🔐 Vérification connexion
   useEffect(() => {
-    const isConnected = localStorage.getItem('isConnected');
-    const storedUser = localStorage.getItem('connectedUser');
-    if (!isConnected || !storedUser) {
-      navigate('/login');
-    } else {
-      setUser(JSON.parse(storedUser));
-    }
-  }, [navigate]);
+              const isConnected = localStorage.getItem('isConnected');
+              const storedUser = localStorage.getItem('connectedUser');
+      
+              if (!isConnected || !storedUser) {
+                  navigate('/login');
+                  return;
+              }
+      
+              const userObj = JSON.parse(storedUser);
+              setUser(userObj);
+      
+              const allowedRoles = ["president", "vice president", "responsable de communication"];
+              if (!allowedRoles.includes(userObj.role)) {
+                  navigate('/login');
+              }
+          }, [navigate]);
+  
 
   // 📥 Récupération des membres
   useEffect(() => {
@@ -80,6 +92,29 @@ const Dashboard = () => {
     };
     fetchBudget();
   }, []);
+
+  // Récupérer le nombre des membres cotisés et non-cotisé
+  useEffect(() => {
+    const fetchCotisation = async () => {
+      const { data, error } = await supabase
+        .from('Membres')
+        .select('cotisation')
+
+      if (error) {
+        console.error('Erreur récupération des cotisations:', error)
+        return
+      }
+
+      const cotises = data.filter(m => m.cotisation === true).length
+      const nonCotises = data.filter(m => m.cotisation === false).length
+
+      setCotisé(cotises)
+      setNonCotisé(nonCotises)
+    }
+
+    fetchCotisation()
+  }, []) // ✅ très important
+
   
 
   if (!user) {
@@ -201,27 +236,21 @@ const budget = totalRevenu - totalDepense;
                 </div>
               </div>
             </div>
+
+
+            <div className="stat-content">
+            <h3>État de cotisation</h3>
+            <CotisationPie cotisé={cotisé} nonCotisé={Noncotisé} />
           </div>
 
-          {/* Members List Section */}
-          {/* <div className="members-section">
-            <div className="section-header">
-              <h2>Liste des Membres</h2>
-              <div className="section-actions">
-                <button className="filter-btn">
-                  <i className="bi bi-funnel-fill"></i>
-                  Filtrer
-                </button>
-                <button className="export-btn">
-                  <i className="bi bi-download"></i>
-                  Exporter
-                </button>
-              </div>
-            </div>
-            <div className="members-list-container">
-              <ListeMembres />
-            </div>
-          </div> */}
+         
+                 
+             
+         
+          </div>
+           <BarFiliere members={membres} />
+
+         
         </div>
       </div>
     </div>

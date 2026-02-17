@@ -3,8 +3,9 @@ import LeftBar from './LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from './SupaBase';
 import { User, Mail, GraduationCap, Lock, Phone, Check, X } from 'lucide-react';
-
+import './Parametre.css'
 const Parametre = () => {
+  const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -44,6 +45,20 @@ const Parametre = () => {
         }
       });
   }, [user]);
+
+  useEffect(() => {
+          const savedMode = localStorage.getItem('darkMode') === 'true';
+          setDarkMode(savedMode);
+          if (savedMode) {
+              document.documentElement.classList.add('dark-mode');
+          }
+      }, []);
+  
+      const toggleDarkMode = () => {
+          setDarkMode(!darkMode);
+          document.documentElement.classList.toggle('dark-mode');
+          localStorage.setItem('darkMode', !darkMode);
+      };
 
   useEffect(() => {
     if (!motDePasse) {
@@ -92,322 +107,13 @@ const Parametre = () => {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-
-        * {
-          box-sizing: border-box;
-          font-family: 'Poppins', sans-serif;
-        }
-
-        .layoutProfile {
-          display: flex;
-          min-height: 100vh;
-          background: #000;
-          color: white;
-          position: relative;
-          overflow-x: hidden;
-        }
-
-        .layoutProfile::before {
-          contentProfile: '';
-          position: fixed;
-          top: -50%;
-          right: -50%;
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle, rgba(253,185,19,0.15) 0%, transparent 70%);
-          animation: pulse 8s ease-in-out infinite;
-          pointer-events: none;
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.1); }
-        }
-
-        .contentProfile {
-          flex: 1;
-          padding-left: 260px;
-          position: relative;
-          z-index: 1;
-        }
-
-        .page-containerProfile {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 40px 40px;
-          margin-left: 40px;
-        }
-
-        .header-section {
-          margin-bottom: 40px;
-          animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .page-title {
-          font-size: 2.8rem;
-          font-weight: 800;
-          background: linear-gradient(135deg, #FDB913, #ffca4f, #FDB913);
-          background-size: 200% 200%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin-bottom: 10px;
-          animation: gradientShift 3s ease infinite;
-        }
-
-        @keyframes gradientShift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-
-        .page-subtitle {
-          color: #aaa;
-          font-size: 1.1rem;
-        }
-
-        .form-container {
-          background: rgba(26,26,26,0.8);
-          border: 2px solid rgba(253,185,19,0.3);
-          border-radius: 24px;
-          padding: 40px;
-          backdrop-filter: blur(10px);
-          box-shadow: 0 20px 60px rgba(253,185,19,0.1);
-          animation: fadeInUp 0.6s ease-out 0.2s both;
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 20px;
-          margin-bottom: 25px;
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .form-group.full-width {
-          grid-column: 1 / -1;
-        }
-
-        .form-label {
-          font-weight: 600;
-          font-size: 0.9rem;
-          color: #FDB913;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .input-wrapper {
-          position: relative;
-        }
-
-        .form-input {
-          width: 100%;
-          padding: 15px 20px 15px 50px;
-          background: rgba(0,0,0,0.5);
-          border: 2px solid rgba(253,185,19,0.2);
-          border-radius: 12px;
-          color: white;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-          outline: none;
-          border-color: #FDB913;
-          background: rgba(0,0,0,0.7);
-          box-shadow: 0 0 20px rgba(253,185,19,0.2);
-        }
-
-        .input-icon {
-          position: absolute;
-          left: 15px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #FDB913;
-          opacity: 0.7;
-        }
-
-        .password-strength {
-          height: 4px;
-          background: rgba(255,255,255,0.1);
-          border-radius: 2px;
-          overflow: hidden;
-          margin-top: 8px;
-        }
-
-        .password-strength-bar {
-          height: 100%;
-          transition: all 0.3s ease;
-          background: linear-gradient(90deg, #ff4444, #ffaa00, #FDB913, #00ff88);
-        }
-
-        .password-match {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-top: 8px;
-          font-size: 0.85rem;
-        }
-
-        .password-match.match {
-          color: #00ff88;
-        }
-
-        .password-match.nomatch {
-          color: #ff4444;
-        }
-
-        .radio-group {
-          display: flex;
-          gap: 20px;
-          margin-top: 10px;
-        }
-
-        .radio-option {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          padding: 10px 20px;
-          background: rgba(0,0,0,0.3);
-          border: 2px solid rgba(253,185,19,0.2);
-          border-radius: 10px;
-          transition: all 0.3s ease;
-        }
-
-        .radio-option:hover {
-          border-color: #FDB913;
-          background: rgba(253,185,19,0.1);
-        }
-
-        .radio-option input[type="radio"] {
-          accent-color: #FDB913;
-        }
-
-        .button-group {
-          display: flex;
-          gap: 15px;
-          margin-top: 40px;
-        }
-
-        .submit-button {
-          flex: 1;
-          padding: 18px;
-          background: linear-gradient(135deg, #FDB913, #ffca4f);
-          border: none;
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 1.1rem;
-          cursor: pointer;
-          color: #000;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .submit-button::before {
-          contentProfile: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.3);
-          transform: translate(-50%, -50%);
-          transition: width 0.6s, height 0.6s;
-        }
-
-        .submit-button:hover::before {
-          width: 300px;
-          height: 300px;
-        }
-
-        .submit-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(253,185,19,0.4);
-        }
-
-        .submit-button:active {
-          transform: translateY(0);
-        }
-
-        .cancel-button {
-          flex: 1;
-          padding: 18px;
-          background: transparent;
-          border: 2px solid rgba(253,185,19,0.3);
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 1.1rem;
-          cursor: pointer;
-          color: white;
-          transition: all 0.3s ease;
-        }
-
-        .cancel-button:hover {
-          border-color: #FDB913;
-          background: rgba(253,185,19,0.1);
-        }
-
-        @media (max-width: 768px) {
-          .contentProfile {
-            padding-left: 0;
-          }
-
-          .form-row {
-            grid-template-columns: 1fr;
-          }
-
-          .page-title {
-            font-size: 2rem;
-          }
-
-          .form-container {
-            padding: 25px;
-          }
-
-          .button-group {
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
       <div className="layoutProfile">
         <LeftBar />
 
         <div className="contentProfile">
           <div className="page-containerProfile">
             <div className="header-section">
-              <h1 className="page-title">⚙️ Paramètres</h1>
+              <h1 className="page-title">🔒 Paramètres</h1>
               <p className="page-subtitle">Modifiez vos informations personnelles</p>
             </div>
 
@@ -461,10 +167,17 @@ const Parametre = () => {
                         value={filiere} 
                         onChange={e => setFiliere(e.target.value)}
                       >
-                        <option value="">Choisir une filière</option>
-                        <option value="Développement Digital">Développement Digital</option>
-                        <option value="Gestion des entreprises">Gestion des entreprises</option>
-                        <option value="Infographie">Infographie</option>
+                        <option value="">-- Sélectionner une filière --</option>
+                                <option value="Développement Digital premier année">Développement Digital 1ère année</option>
+                                <option value="Développement Digital option full stack">Développement Digital - Full Stack</option>
+                                <option value="Infrastructure Digitale">Infrastructure Digitale</option>
+                                <option value="Gestion des entreprises première année">Gestion des Entreprises première année</option>
+                                <option value="Assistant Administratif">Assistant Administratif</option>
+                                <option value="Gestion des entreprises option commerce">Gestion des Entreprises - Commerce</option>
+                                <option value="Gestion des entreprises option comptabilité et finance">Gestion des entreprises option comptabilité et finance</option>
+                                <option value="Gestion des entreprises option RH">Gestion des Entreprises - RH</option>
+                                <option value="Gestion des entreprises option office manager">Gestion des Entreprises - Office Manager</option>
+                                <option value="Infographie">Infographie</option>
                       </select>
                     </div>
                   </div>

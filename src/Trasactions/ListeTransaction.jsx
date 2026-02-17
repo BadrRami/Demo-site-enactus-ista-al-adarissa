@@ -27,16 +27,23 @@ const ListeTransaction = () => {
     };
 
     // 🔐 Vérification connexion
-    useEffect(() => {
-        const isConnected = localStorage.getItem('isConnected');
-        const storedUser = localStorage.getItem('connectedUser');
-
-        if (!isConnected || !storedUser) {
-            navigate('/login');
-        } else {
-            setUser(JSON.parse(storedUser));
-        }
-    }, [navigate]);
+      useEffect(() => {
+                        const isConnected = localStorage.getItem('isConnected');
+                        const storedUser = localStorage.getItem('connectedUser');
+                
+                        if (!isConnected || !storedUser) {
+                            navigate('/login');
+                            return;
+                        }
+                
+                        const userObj = JSON.parse(storedUser);
+                        setUser(userObj);
+                
+                        const allowedRoles = ["president", "vice president", "responsable financier"];
+                        if (!allowedRoles.includes(userObj.role)) {
+                            navigate('/login');
+                        }
+        }, [navigate]);
 
     // 📥 Récupérer les transactions
     useEffect(() => {
@@ -82,6 +89,15 @@ const ListeTransaction = () => {
         transaction.Type_Transaction?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    async function Rechercher(params) {
+        const transactionExact = transactions.filter(transaction =>
+        transaction.Description?.toLowerCase().includes(params.toLowerCase()) ||
+        transaction.Catégorie?.toLowerCase().includes(params.toLowerCase()) ||
+        transaction.Type_Transaction?.toLowerCase().includes(params.toLowerCase()))
+        return transactionExact
+    }
+    Rechercher(searchTerm)
+
     // Calculs
     const totalRevenu = transactions
         .filter(t => t.Type_Transaction === 'Revenu')
@@ -108,10 +124,6 @@ const ListeTransaction = () => {
     return (
         <div className="transaction-container">
             <div className="grid-overlay"></div>
-
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
 
             <div className="transaction-layout">
                 <LeftBar />

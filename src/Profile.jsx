@@ -47,11 +47,6 @@ const Profile = () => {
   return (
     <div className="profile-page-container">
       <div className="grid-overlay"></div>
-
-      {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-        {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-      </button> */}
-
       <div className="profile-layout">
         <LeftBar />
         
@@ -74,11 +69,15 @@ const Profile = () => {
               </div>
               <div className="info-row">
                 <span className="info-label">Nom complet</span>
-                <span className="info-value">{user.Nom.charAt(0).toUpperCase() + user.Nom.slice(1)}</span>
+                <span className="info-value">{user.Nom}</span>
               </div>
               <div className="info-row">
                 <span className="info-label">Email</span>
                 <span className="info-value">{user.email}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">ID Enactus</span>
+                <span className="info-value">{user.IDENACTUS}</span>
               </div>
             </div>
 

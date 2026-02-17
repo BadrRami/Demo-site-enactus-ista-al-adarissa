@@ -316,6 +316,15 @@ body {
   line-height: 1.8;
   white-space: pre-line;
 }
+/* Event image */
+.img{
+  display: flex;
+  justify-content: center;
+}
+.img img{
+  width: 300px;
+  height: 300px;
+}
 
 /* Event Actions */
 .event-actions {

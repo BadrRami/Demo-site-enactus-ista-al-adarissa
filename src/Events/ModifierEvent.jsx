@@ -15,6 +15,27 @@ const ModifierEvent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [user, setUser] = useState(null);
+  
+  // 🔐 Vérification connexion
+  useEffect(() => {
+                        const isConnected = localStorage.getItem('isConnected');
+                        const storedUser = localStorage.getItem('connectedUser');
+                  
+                        if (!isConnected || !storedUser) {
+                            navigate('/login');
+                            return;
+                        }
+                  
+                        const userObj = JSON.parse(storedUser);
+                        setUser(userObj);
+                  
+                        const allowedRoles = ["president", "vice president", "responsable des evenement"];
+                        if (!allowedRoles.includes(userObj.role)) {
+                            navigate('/login');
+                        }
+  }, [navigate]);
+
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedMode);

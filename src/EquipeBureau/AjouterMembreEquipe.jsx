@@ -16,6 +16,24 @@ const AjouterEquipe = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+                const isConnected = localStorage.getItem('isConnected');
+                const storedUser = localStorage.getItem('connectedUser');
+        
+                if (!isConnected || !storedUser) {
+                    navigate('/login');
+                    return;
+                }
+        
+                const userObj = JSON.parse(storedUser);
+                setUser(userObj);
+        
+                const allowedRoles = ["president", "vice president", "responsable de communication"];
+                if (!allowedRoles.includes(userObj.role)) {
+                    navigate('/login');
+                }
+    }, [navigate]);
 
     useEffect(() => {
         const savedMode = localStorage.getItem('darkMode') === 'true';
@@ -81,11 +99,6 @@ const AjouterEquipe = () => {
     return (
         <div className="ajouter-equipe-container">
             <div className="grid-overlay"></div>
-
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
-
             <div className="ajouter-equipe-layout">
                 <LeftBar />
 

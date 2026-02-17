@@ -10,6 +10,29 @@ const ListeMembres = () => {
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
 
+  // 🔐 Vérification connexion
+  useEffect(() => {
+        const isConnected = localStorage.getItem('isConnected');
+        const storedUser = localStorage.getItem('connectedUser');
+                  
+        if (!isConnected || !storedUser) {
+            navigate('/login');
+            return;
+        }
+                  
+        const userObj = JSON.parse(storedUser);
+        setUser(userObj);
+                  
+        const role = userObj.role?.trim().toLowerCase();
+
+const allowedRoles = ["president", "vice president", "responsable rh"];
+
+if (!allowedRoles.includes(role)) {
+    navigate('/login');
+}
+
+  }, [navigate]);
+
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedMode);
@@ -23,16 +46,6 @@ const ListeMembres = () => {
     document.documentElement.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', !darkMode);
   };
-
-  useEffect(() => {
-    const isConnected = localStorage.getItem('isConnected');
-    const storedUser = localStorage.getItem('connectedUser');
-    if (!isConnected || !storedUser) {
-      navigate('/login');
-    } else {
-      setUser(JSON.parse(storedUser));
-    }
-  }, [navigate]);
 
   useEffect(() => {
     const fetchMembres = async () => {
@@ -130,6 +143,7 @@ const ListeMembres = () => {
                   <th>Filière</th>
                   <th>Cotisation</th>
                   <th>Téléphone</th>
+                  <th>ID Enactus</th>
                   <th>Genre</th>
                   <th>Actions</th>
                 </tr>
@@ -147,6 +161,7 @@ const ListeMembres = () => {
                       </span>
                     </td>
                     <td>{member.telephone}</td>
+                    <td>{member.IDENACTUS}</td>
                     <td>
                       <span className={`membres-badge-genre ${member.genre?.toLowerCase()}`}>
                         {member.genre === 'Homme' ? '👨' : '👩'} {member.genre}

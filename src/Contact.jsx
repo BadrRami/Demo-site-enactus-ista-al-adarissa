@@ -21,13 +21,7 @@ const Contact = () => {
     return (
         <div className="contact-page-container">
             <div className="grid-overlay"></div>
-             {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? (
-                    <i className="bi bi-sun-fill"></i>
-                ) : (
-                    <i className="bi bi-moon-stars-fill"></i>
-                )}
-            </button> */}
+             
             <div className='headerContact'>
                 <h1>Contactez-nous</h1>
                 <p>Nous sommes là pour répondre à toutes vos questions</p>
@@ -36,7 +30,7 @@ const Contact = () => {
                 <div className='card '>
                 <h2>Envoyez-nous un message</h2>
                 <form id="contactForm">
-                    <div class="form-group">
+                    <div className="form-group">
                         <label htmlFor="nom">Nom complet *</label>
                         <input type="text" id="nom" name="nom" required/>
                     </div>
@@ -69,29 +63,29 @@ const Contact = () => {
                 <div>
                     <div className="contact-info ms-2">
                 <div className="card mt-1">
-                    <h3>📧 Email</h3>
+                    <h3><i className="bi bi-envelope"></i> Email</h3>
                     <p><a href="mailto:contact@enactus.org">contact@enactus.org</a></p>
                 </div>
 
                 <div className="card mt-1">
-                    <h3>📱 Téléphone</h3>
+                    <h3><i className="bi bi-phone-fill"></i> Téléphone</h3>
                     <p><a href="tel:+212600000000">+212 6 00 00 00 00</a></p>
                 </div>
 
                 <div className="card mt-1">
-                    <h3>📍 Adresse</h3>
+                    <h3><i className="bi bi-geo-alt-fill"></i> Adresse</h3>
                     <p>ISTA AL ADARISSA<br/>FES, Maroc</p>
                 </div>
 
                 <div className="card mt-1">
-                    <h3>🌐 Réseaux sociaux</h3>
+                    <h3><i className="bi bi-dribbble"></i> Réseaux sociaux</h3>
                     <p>Suivez-nous sur nos réseaux</p>
-                    <div class="social-links">
-                        <Link to={""}><i class="bi bi-facebook"></i></Link>
-                        <Link to={"https://www.instagram.com/enactus.istafes/?hl=fr"}><i class="bi bi-instagram"></i></Link>
-                        <Link to={"https://www.linkedin.com/company/enactus-ista-al-adarissa-f%C3%A8s/posts/?feedView=all"}><i class="bi bi-linkedin"></i></Link>
-                        <Link to={""}><i class="bi bi-twitter-x"></i></Link>
-                        <Link to={""}><i class="bi bi-tiktok"></i></Link>
+                    <div className="social-links">
+                        <Link to={""}><i className="bi bi-facebook"></i></Link>
+                        <Link to={"https://www.instagram.com/enactus.istafes/?hl=fr"}><i className="bi bi-instagram"></i></Link>
+                        <Link to={"https://www.linkedin.com/company/enactus-ista-al-adarissa-f%C3%A8s/posts/?feedView=all"}><i className="bi bi-linkedin"></i></Link>
+                        <Link to={""}><i className="bi bi-twitter-x"></i></Link>
+                        <Link to={""}><i className="bi bi-tiktok"></i></Link>
                     </div>
                 </div>
             </div>

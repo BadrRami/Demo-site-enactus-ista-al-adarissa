@@ -51,6 +51,13 @@
     100% { transform: translate(50px, 50px); }
 }
 
+/* LeftBar visible au-dessus de l'overlay */
+.liste-membres-wrapper > *:not(.liste-membres-grid-overlay):not(.liste-membres-content) {
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
 /* Toggle Dark Mode */
 .liste-membres-dark-toggle {
     position: fixed;
@@ -82,9 +89,11 @@
 /* Main Content */
 .liste-membres-content {
     flex: 1;
+    min-width: 0; /* ← empêche le flex child de déborder */
     padding: 40px;
     position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 
 .liste-membres-header {
@@ -151,25 +160,73 @@
     letter-spacing: 0.5px;
 }
 
-/* Table Container */
+/* Table Container — scroll horizontal activé */
 .membres-table-container {
     background: var(--card);
     border-radius: 24px;
     border: 1px solid var(--border);
     box-shadow: 0 10px 40px var(--shadow);
-    overflow: hidden;
+    overflow-x: auto;          /* ← scroll horizontal */
+    overflow-y: visible;
     animation: fadeInUpMembres 0.6s ease 0.4s both;
+    /* scrollbar stylée */
+    scrollbar-width: thin;
+    scrollbar-color: var(--yellow) var(--surface);
+}
+
+.membres-table-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.membres-table-container::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 0 0 24px 24px;
+}
+
+.membres-table-container::-webkit-scrollbar-thumb {
+    background: var(--yellow);
+    border-radius: 3px;
 }
 
 .dark-mode .membres-table-container {
     box-shadow: 0 10px 40px rgba(253, 185, 19, 0.2);
 }
 
-/* Table */
+/* Table — largeur minimale fixe pour que toutes les colonnes soient visibles */
 .membres-table {
     width: 100%;
+    min-width: 900px;          /* ← garantit que toutes les colonnes ont de la place */
     border-collapse: collapse;
+    table-layout: fixed;       /* ← répartition contrôlée des colonnes */
 }
+
+/* Largeurs des colonnes */
+.membres-table th:nth-child(1),
+.membres-table td:nth-child(1) { width: 50px; }        /* # */
+
+.membres-table th:nth-child(2),
+.membres-table td:nth-child(2) { width: 160px; }       /* Nom */
+
+.membres-table th:nth-child(3),
+.membres-table td:nth-child(3) { width: 190px; }       /* Email */
+
+.membres-table th:nth-child(4),
+.membres-table td:nth-child(4) { width: 110px; }       /* Filière */
+
+.membres-table th:nth-child(5),
+.membres-table td:nth-child(5) { width: 120px; }       /* Cotisation */
+
+.membres-table th:nth-child(6),
+.membres-table td:nth-child(6) { width: 120px; }       /* Téléphone */
+
+.membres-table th:nth-child(7),
+.membres-table td:nth-child(7) { width: 100px; }       /* ID Enactus */
+
+.membres-table th:nth-child(8),
+.membres-table td:nth-child(8) { width: 100px; }       /* Genre */
+
+.membres-table th:nth-child(9),
+.membres-table td:nth-child(9) { width: 100px; }       /* Actions */
 
 .membres-table thead {
     background: var(--surface);
@@ -177,13 +234,14 @@
 }
 
 .membres-table th {
-    padding: 20px 20px;
+    padding: 16px 12px;
     text-align: left;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     color: var(--text);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;       /* ← headers sur une ligne */
 }
 
 .membres-table tbody tr {
@@ -201,9 +259,12 @@
 }
 
 .membres-table td {
-    padding: 20px;
+    padding: 14px 12px;
     color: var(--text);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    white-space: nowrap;       /* ← pas de retour à la ligne dans les cellules */
+    overflow: hidden;
+    text-overflow: ellipsis;   /* ← … si le texte est trop long */
 }
 
 .membres-table td:first-child {
@@ -216,10 +277,11 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 16px;
+    padding: 5px 12px;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .membres-badge-cotisation.cotise {
@@ -234,9 +296,10 @@
 
 .membres-badge-cotisation::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
+    flex-shrink: 0;
     animation: pulseMembres 2s infinite;
 }
 
@@ -257,11 +320,12 @@
 .membres-badge-genre {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
+    gap: 5px;
+    padding: 5px 12px;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .membres-badge-genre.homme {
@@ -277,7 +341,7 @@
 /* Actions Buttons */
 .membres-actions-cell {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
 }
 
@@ -285,16 +349,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: rgba(245, 158, 11, 0.1);
     color: #f59e0b;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .membres-btn-edit:hover {
@@ -307,15 +372,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: rgba(239, 68, 68, 0.1);
     color: #ef4444;
-    font-size: 1.1rem;
+    font-size: 1rem;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .membres-btn-delete:hover {
@@ -413,14 +479,6 @@
 
     .membres-stats-bar {
         flex-direction: column;
-    }
-
-    .membres-table-container {
-        overflow-x: auto;
-    }
-
-    .membres-table {
-        min-width: 1000px;
     }
 
     .liste-membres-dark-toggle {

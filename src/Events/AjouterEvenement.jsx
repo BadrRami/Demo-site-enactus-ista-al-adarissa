@@ -12,7 +12,35 @@ const AjouterEvenement = () => {
     const [description, setDescription] = useState('');
     const [darkMode, setDarkMode] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [img, setImg] = useState('')
     const navigate = useNavigate();
+
+    // 🔐 Vérification connexion
+    useEffect(() => {
+                            const isConnected = localStorage.getItem('isConnected');
+                            const storedUser = localStorage.getItem('connectedUser');
+                    
+                            if (!isConnected || !storedUser) {
+                                navigate('/login');
+                                return;
+                            }
+                    
+                            const userObj = JSON.parse(storedUser);
+                            setUser(userObj);
+                    
+                            const role = userObj.role?.trim().toLowerCase();
+
+                            const allowedRoles = [
+                            "president",
+                            "vice president",
+                            "responsable des evenement" // sans accent
+                            ];
+
+                            if (!allowedRoles.includes(role)) {
+                                navigate('/login');
+                            }
+
+    }, [navigate]);
 
     useEffect(() => {
         const savedMode = localStorage.getItem('darkMode') === 'true';
@@ -28,20 +56,45 @@ const AjouterEvenement = () => {
         localStorage.setItem('darkMode', !darkMode);
     };
 
-    // 🔐 Vérification connexion
-    useEffect(() => {
-        const isConnected = localStorage.getItem('isConnected');
-        const storedUser = localStorage.getItem('connectedUser');
 
-        if (!isConnected || !storedUser) {
-            navigate('/login');
-        } else {
-            setUser(JSON.parse(storedUser));
+    // Upload l’image vers Storage
+
+    const uploadImage = async (file) => {
+        if (!file) return null;
+
+        const cleanName = file.name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "_")
+            .replace(/[^a-zA-Z0-9._-]/g, "");
+
+        const filePath = `${Date.now()}-${cleanName}`;
+
+        const { error } = await supabase.storage
+            .from("images")
+            .upload(filePath, file, { upsert: true });
+
+        if (error) {
+            console.log(error);
+            return null;
         }
-    }, [navigate]);
+
+        const { data } = supabase.storage
+            .from("images")
+            .getPublicUrl(filePath);
+
+        return data.publicUrl;
+    };
+
+
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const imageFile = e.target.image.files[0];
+
+        const imageUrl = await uploadImage(imageFile);
 
         if (!nom.trim() || !date || !description.trim() || !lieu.trim()) {
             alert("Tous les champs sont obligatoires");
@@ -52,6 +105,11 @@ const AjouterEvenement = () => {
             alert("La date doit être future");
             return;
         }
+        // if (!imageUrl) {
+        //     alert("Erreur image");
+        //     return;
+        // }
+        
 
         setLoading(true);
 
@@ -62,12 +120,14 @@ const AjouterEvenement = () => {
             Lieu: lieu,
             Description: description,
             created_at: new Date().toISOString(),
+            image_url: imageUrl,
             Creer_par: user.id
         };
 
         const { data, error } = await supabase
             .from('Evenement')
-            .insert([Event]);
+            .insert([Event])
+            .select();
 
         setLoading(false);
 
@@ -96,11 +156,6 @@ const AjouterEvenement = () => {
     return (
         <div className="ajouter-evenement-container">
             <div className="grid-overlay"></div>
-
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
-
             <div className="ajouter-evenement-layout">
                 <LeftBar />
 
@@ -159,6 +214,21 @@ const AjouterEvenement = () => {
                                     onChange={(e) => setLieu(e.target.value)}
                                     placeholder="Ex: ISTA AL ADARISSA - Salle de conférence"
                                     required
+                                />
+                            </div>
+                            <div className="form-group full-width">
+                                <label htmlFor="img">
+                                    <i className="bi bi-image-fill"></i>
+                                    Image de l'événement *
+                                </label>
+                                <input
+                                    type="file"
+                                    id="img"
+                                    name='image'
+                                    value={img}
+                                    onChange={(e) => setImg(e.target.value)}
+                                    accept="image/*"
+                                    // required
                                 />
                             </div>
 

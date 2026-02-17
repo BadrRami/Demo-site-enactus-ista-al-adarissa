@@ -8,8 +8,12 @@ import Contact from "./Contact";
 import Profile from "./Profile";
 import Dashboard from "./Dashboard";
 
+
+
+
 import AjouterMembre from "./Membres/AjouterMembre";
 import ModifierMembre from "./Membres/ModifierMembre";
+import ListeMembres from "./Membres/ListeMembres";
 
 import AjouterMembreEquipe from "./EquipeBureau/AjouterMembreEquipe";
 import ModifierMembreEquipe from "./EquipeBureau/ModifierMembreEquipe";
@@ -32,12 +36,13 @@ import ProtectedLayout from "./ProtectedLayout";
 import Annonce from "./Annonces/Annonce";
 import CreerAnnonce from "./Annonces/CreerAnnonce";
 import ModifierAnnonce from "./Annonces/ModifierAnnonce";
-import Footer from "./Footer";
+
 import ListeTickets from "./Tickets/ListeTickets";
 import CrErTickets from "./Tickets/CréerTickets";
 import ScannerTicket from "./Tickets/ScannerTicket ";
-import ListeMembres from "./Membres/ListeMembres";
 
+
+import NotFound from './NotFound'
 
 function App() {
   return (
@@ -91,7 +96,8 @@ function App() {
         <Route path="/parametre" element={<Parametre />} />
 
         {/* 404 */}
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<NotFound/>} />
+        
       </Routes>
       
     </>

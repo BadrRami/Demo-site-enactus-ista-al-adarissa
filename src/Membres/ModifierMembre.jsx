@@ -18,6 +18,29 @@ const ModifierMembre = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [user, setUser] = useState(null);
+  
+  // 🔐 Vérification connexion
+  useEffect(() => {
+                          const isConnected = localStorage.getItem('isConnected');
+                          const storedUser = localStorage.getItem('connectedUser');
+                  
+                          if (!isConnected || !storedUser) {
+                              navigate('/login');
+                              return;
+                          }
+                  
+                          const userObj = JSON.parse(storedUser);
+                          const role = userObj.role?.trim().toLowerCase();
+                          setUser(userObj);
+                  
+                          const allowedRoles = ["president", "vice president", "responsable rh"];
+
+                            if (!allowedRoles.includes(role)) {
+                                navigate('/login');
+                            }
+  }, [navigate]);
+
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedMode);

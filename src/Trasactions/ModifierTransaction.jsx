@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Edit3,DollarSign,Calendar,Tag,FileText,Save,ArrowLeft} from 'lucide-react';
 import LeftBar from '../LeftBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import supabase from '../SupaBase';
 
 const ModifierTransaction = () => {
+    const [user, setUser] = useState(null);
     const [description, setDescription] = React.useState('');
     const [montant, setMontant] = React.useState('');
     const [date, setDate] = React.useState('');
@@ -13,6 +14,25 @@ const ModifierTransaction = () => {
     const [loading, setLoading] = React.useState(true); // ✅ Changé à true
     const {id} = useParams()
     const navigate = useNavigate();
+
+    // 🔐 Vérification connexion
+      useEffect(() => {
+                        const isConnected = localStorage.getItem('isConnected');
+                        const storedUser = localStorage.getItem('connectedUser');
+                
+                        if (!isConnected || !storedUser) {
+                            navigate('/login');
+                            return;
+                        }
+                
+                        const userObj = JSON.parse(storedUser);
+                        setUser(userObj);
+                
+                        const allowedRoles = ["president", "vice president", "responsable financier"];
+                        if (!allowedRoles.includes(userObj.role)) {
+                            navigate('/login');
+                        }
+        }, [navigate]);
     
     useEffect(() => {
     console.log('ID reçu:', id); // ✅ Vérifier l'ID
@@ -313,7 +333,7 @@ const ModifierTransaction = () => {
 
                 <main className="content">
                     <div className="page-containerTransaction">
-                        <a href="/dashboard" className="back-button">
+                        <a href="/listeTransaction" className="back-button">
                             <ArrowLeft size={20} /> Retour au Dashboard
                         </a>
 

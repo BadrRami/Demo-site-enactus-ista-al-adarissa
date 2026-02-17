@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LeftBar from '../LeftBar';
 import supabase from '../SupaBase';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,27 @@ const CreerAnnonce = () => {
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+
+    // 🔐 Vérification connexion
+    useEffect(() => {
+        const isConnected = localStorage.getItem('isConnected');
+        const storedUser = localStorage.getItem('connectedUser');
+
+        if (!isConnected || !storedUser) {
+            navigate('/login');
+            return;
+        }
+
+        const userObj = JSON.parse(storedUser);
+        setUser(userObj);
+
+        const allowedRoles = ["president", "vice president", "Responsable de communication"];
+        if (!allowedRoles.includes(userObj.role)) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +43,8 @@ const CreerAnnonce = () => {
 
         const annonce = {
             Titre: titre,
-            Description: description
+            Description: description,
+            Créer_par:user.id
         };
 
         const { error } = await supabase

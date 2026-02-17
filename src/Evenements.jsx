@@ -39,10 +39,6 @@ const Evenements = () => {
         <div className='evenements-page-container'>
             <div className="grid-overlay"></div>
 
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
-
             <header className='text-center'>
                 <h1>Nos Événements</h1>
                 <h4>Découvrez tous nos événements et activités à venir</h4>
@@ -53,6 +49,9 @@ const Evenements = () => {
                     <div className='events-grid'>
                         {AllEvents.map((event, index) => (
                             <div key={event.id} className='event-card' style={{animationDelay: `${index * 0.1}s`}}>
+                                <div className="image" style={{display:"flex",justifyContent:'center'}}>
+                                    <img src={event.image_url} alt="" style={{width:"250px", height:"250px"}}/>
+                                </div>
                                 <div className="event-header">
                                     <h3>{event.Nom_Evenement}</h3>
                                 </div>

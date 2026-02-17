@@ -18,12 +18,14 @@ const LeftBar = () => {
 
   const statut = connectedUser.statut?.trim().toLowerCase();
   const role = connectedUser.role?.trim().toLowerCase();
+  
   const isBureau = statut === 'bureau';
   const isPresident = role === 'president';
   const isVicePresident = role === 'vice president';
   const isCommunication = role === 'responsable de communication';
+  const isRH = role === 'responsable rh';
+  const isEvent = role === 'responsable des evenement';
   const isTreasurer = role === 'treasurer';
-  const isEvent = role === 'responsable des événement';
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
@@ -107,7 +109,7 @@ const LeftBar = () => {
                   </Link>
                 </li>
               )}
-              {(isPresident  ||isTreasurer|| isVicePresident) && (
+              {(isPresident  || isVicePresident || isEvent) && (
               <li>
                 <Link to="/tickets"  title="Tickets">
                   <i className="bi bi-ticket-fill"></i>
@@ -115,7 +117,7 @@ const LeftBar = () => {
                 </Link>
               </li>
               )}
-              {(isPresident  || isVicePresident) && (
+              {(isPresident  || isVicePresident || isRH) && (
               <li>
                 <Link to="/Membre"  title="Tickets">
                   <i className="bi bi-people-fill"></i>

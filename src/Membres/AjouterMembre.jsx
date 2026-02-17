@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LeftBar from '../LeftBar';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../SupaBase';
@@ -14,7 +14,28 @@ const AjouterMembre = () => {
     const [genre, setGenre] = React.useState(null);
     const [darkMode, setDarkMode] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    
+    // 🔐 Vérification connexion
+    useEffect(() => {
+                            const isConnected = localStorage.getItem('isConnected');
+                            const storedUser = localStorage.getItem('connectedUser');
+                    
+                            if (!isConnected || !storedUser) {
+                                navigate('/login');
+                                return;
+                            }
+                    
+                            const userObj = JSON.parse(storedUser);
+                            setUser(userObj);
+                    
+                            const allowedRoles = ["president", "vice president", "responsable rh"];
+
+                                if (!allowedRoles.includes(role)) {
+                                    navigate('/login');
+                                }
+    }, [navigate]);
 
     React.useEffect(() => {
         const savedMode = localStorage.getItem('darkMode') === 'true';
@@ -144,9 +165,13 @@ const AjouterMembre = () => {
                                 <option value="">-- Sélectionner une filière --</option>
                                 <option value="Développement Digital premier année">Développement Digital 1ère année</option>
                                 <option value="Développement Digital option full stack">Développement Digital - Full Stack</option>
-                                <option value="Gestion des entreprise option commerce">Gestion des Entreprises - Commerce</option>
-                                <option value="Gestion des entreprise option RH">Gestion des Entreprises - RH</option>
-                                <option value="Gestion des entreprise option office manager">Gestion des Entreprises - Office Manager</option>
+                                <option value="Infrastructure Digitale">Infrastructure Digitale</option>
+                                <option value="Gestion des entreprises première année">Gestion des Entreprises première année</option>
+                                <option value="Assistant Administratif">Assistant Administratif</option>
+                                <option value="Gestion des entreprises option commerce">Gestion des Entreprises - Commerce</option>
+                                <option value="Gestion des entreprises option comptabilité et finance">Gestion des entreprises option comptabilité et finance</option>
+                                <option value="Gestion des entreprises option RH">Gestion des Entreprises - RH</option>
+                                <option value="Gestion des entreprises option office manager">Gestion des Entreprises - Office Manager</option>
                                 <option value="Infographie">Infographie</option>
                             </select>
                         </div>

@@ -28,14 +28,22 @@ const Equipe = () => {
 
   // 🔐 Vérification connexion
   useEffect(() => {
-    const isConnected = localStorage.getItem('isConnected');
-    const storedUser = localStorage.getItem('connectedUser');
-    if (!isConnected || !storedUser) {
-      navigate('/login');
-    } else {
-      setUser(JSON.parse(storedUser));
-    }
-  }, [navigate]);
+                    const isConnected = localStorage.getItem('isConnected');
+                    const storedUser = localStorage.getItem('connectedUser');
+            
+                    if (!isConnected || !storedUser) {
+                        navigate('/login');
+                        return;
+                    }
+            
+                    const userObj = JSON.parse(storedUser);
+                    setUser(userObj);
+            
+                    const allowedRoles = ["president", "vice president", "responsable de communication"];
+                    if (!allowedRoles.includes(userObj.role)) {
+                        navigate('/login');
+                    }
+    }, [navigate]);
 
   // 📥 Récupérer les membres
   useEffect(() => {

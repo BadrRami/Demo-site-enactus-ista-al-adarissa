@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LeftBar from '../LeftBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../SupaBase';
 import './Evenement.css';
 
@@ -9,6 +9,32 @@ const Evenement = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    // 🔐 Vérification connexion
+      useEffect(() => {
+                        const isConnected = localStorage.getItem('isConnected');
+                        const storedUser = localStorage.getItem('connectedUser');
+                
+                        if (!isConnected || !storedUser) {
+                            navigate('/login');
+                            return;
+                        }
+                        const userObj = JSON.parse(storedUser);
+                        const role = userObj.role?.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                        const allowedRoles = [
+                        "president",
+                        "vice president",
+                        "responsable des evenement"
+                        ];
+
+                        if (!allowedRoles.includes(role)) {
+                            navigate('/login');
+                        }
+
+        }, [navigate]);
 
     useEffect(() => {
         const savedMode = localStorage.getItem('darkMode') === 'true';
@@ -66,10 +92,6 @@ const Evenement = () => {
     return (
         <div className="evenement-admin-container">
             <div className="grid-overlay"></div>
-
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
 
             <div className="evenement-admin-layout">
                 <LeftBar />

@@ -11,17 +11,17 @@ const Home = () => {
         {
             image: '/img/slide1.png',
             title: 'Bienvenue sur Enactus',
-            subtitle: 'ISTA AL ADARISSA',
-            description: 'Rejoignez une communauté d\'étudiants entrepreneurs engagés pour un impact social positif'
+            subtitle: 'ISTA AL ADARISSA ',
+            description: 'Premier club Enactus de l’OFPPT, rejoignez une communauté d’étudiants entrepreneurs engagés pour un impact social positif'
         },
         {
-            image: '/img/slide.png',
+            image: '/img/slide2.png',
             title: 'Innovation Sociale',
             subtitle: 'CRÉER LE CHANGEMENT',
             description: 'Développez des projets entrepreneuriaux qui transforment des vies et des communautés'
         },
         {
-            image: '/img/slide.png',
+            image: '/img/trophy.jpeg',
             title: 'Action Collective',
             subtitle: 'ENSEMBLE PLUS FORTS',
             description: 'Collaborez avec des étudiants passionnés et créez un impact durable'
@@ -61,11 +61,6 @@ const Home = () => {
         <>
         <div className="home-container">
             <div className="grid-overlay"></div>
-
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
-
             {/* Hero Slider */}
             <section className="hero-slider">
                 <div className="slider-container">

@@ -405,6 +405,12 @@ body {
   flex-direction: column;
   gap: 20px;
 }
+.contact-info .card .bi-envelope,
+.contact-info .card .bi-phone-fill,
+.contact-info .card .bi-geo-alt-fill,
+.contact-info .card .bi-dribbble{
+  color: var(--yellow);
+}
 
 .contact-info .card {
   padding: 30px;

@@ -371,7 +371,9 @@
     position: fixed;
     left: -280px;
     z-index: 999;
-    box-shadow: 5px 0 30px var(--shadow);
+    box-shadow: 5px 0 30px var(--shadow); 
+    
+    
   }
 
   .leftbar.collapsed {
@@ -397,4 +399,5 @@
     width: 70px;
     left: -70px;
   }
+  
 }

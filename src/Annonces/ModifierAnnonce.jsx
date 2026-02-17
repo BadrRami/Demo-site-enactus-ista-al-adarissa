@@ -11,6 +11,26 @@ const ModifierAnnonce = () => {
     const [titre, setTitre] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+
+
+    useEffect(() => {
+            const isConnected = localStorage.getItem('isConnected');
+            const storedUser = localStorage.getItem('connectedUser');
+    
+            if (!isConnected || !storedUser) {
+                navigate('/login');
+                return;
+            }
+    
+            const userObj = JSON.parse(storedUser);
+            setUser(userObj);
+    
+            const allowedRoles = ["president", "vice president", "Responsable de communication"];
+            if (!allowedRoles.includes(userObj.role)) {
+                navigate('/login');
+            }
+        }, [navigate]);
 
     useEffect(() => {
         const fetchAnnonce = async () => {

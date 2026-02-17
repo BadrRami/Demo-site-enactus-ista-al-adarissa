@@ -21,11 +21,6 @@ const About = () => {
     return (
         <div className="about-page-container">
             <div className="grid-overlay"></div>
-            
-            {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-                {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-            </button> */}
-
             <header className='headerAbout'>
                 <h1>QUI SOMMES-NOUS ?</h1>
                 <h4>Enactus est une communauté mondiale d'étudiants, d'universitaires et de leaders d'entreprise engagés à utiliser l'action entrepreneuriale pour créer un monde meilleur et plus durable.</h4>
@@ -66,6 +61,18 @@ const About = () => {
                     </div>
                 </div>
             </article>
+
+            <main className="trophy-section">
+                <div className="trophy-card">
+                    <div className="trophy-image-wrapper">
+                        <img src="public/img/trophy.jpeg" alt="Trophée remis par l'administration de ISTA Hay Al Adarissa" />
+                    </div>
+                    <div className="trophy-text">
+                        <span className="trophy-badge">🏆 Reconnaissance</span>
+                        <p>Notre club a eu l'honneur de recevoir un trophée de remerciement délivré par l'administration de ISTA Hay Al Adarissa.</p>
+                    </div>
+                </div>
+            </main>
 
             <section>
                 <h2 className="section-title">Notre Équipe</h2>

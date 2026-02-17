@@ -54,10 +54,6 @@ const Login = () => {
     <div className="login-page-container">
       <div className="grid-overlay"></div>
 
-      {/* <button className="dark-mode-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
-        {darkMode ? <i className="bi bi-sun-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
-      </button> */}
-
       <div className="login-content">
         {/* Left Side - Branding */}
         <div className="login-branding">
